@@ -1,0 +1,526 @@
+---
+output:
+  html_document:                    # Classe de documento.
+    toc: true                       # Exibir sum?rio.
+    toc_depth: 2                    # Profundidade do sum?rio.
+    toc_float:                      # Sum?rio flutuante na borda.
+      collapsed: true
+      smooth_scroll: true
+    number_sections: true           # Se??es numeradas.
+    theme: cerulean
+    #spacelab
+    #default,cerulean,journal,flatly,readable,spacelab,
+    #united,cosmo,lumen,paper,sandstone,simplex,yeti
+    
+    highlight: espresso
+    #default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, and textmate
+    #css: styles.css                 # Caminho para arquivo CSS.
+    fig_width: 7                    # Lagura das figuras.
+    fig_height: 6                   # Altura das figuras.
+    fig_caption: true               # Exibica??o de legenda.
+    fig_align: 'center'
+#    code_folding: hide              # Esconder/exibir bloco de c?digo.
+#    keep_md: true                   # Manter o arquivo md.
+    #template: quarterly_report.html # Caminho para o template.  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+---
+
+<font size="8"> 
+<p align=”center”> <b> Primeiros Passos com o R </b> </center>
+</font>
+
+<font size="5"> 
+<p align=”center”> <b> Parte 3 - Importação e Programação </b> </center>
+</font>
+
+<font size="4"> 
+<p align=”center”> [Lineu Alberto Cavazani de Freitas](https://lineu96.github.io/st/) </center>
+</font> 
+
+---
+
+# Leitura de dados {.tabset .tabset-fade}
+
+Existem duas formas de trabalhar com leitura de dados no R: na primeira delas o usuário digita os dados e armazena num objeto, na segunda o usuário lê um arquivo externo (na memória do computador ou até mesmo algum arquivo disponível online). 
+
+A primeira já foi suficientemente discutida quando foram apresentadas as funções `c()`, `rep()`, `seq()`, `matrix()`, `data.frame()`, `list()`, etc. Além dessas, são opções interessantes as funções `scan()` e `readLines()`.
+
+Já para o caso de leitura de arquivos externos, os formatos mais comuns de arquivos para leitura são: texto (**txt**), comma separated values (**csv**) e planilhas Excel (**xlsx**). Todos estes formatos podem ser importados para o R. Outros formatos também são possíveis, mas abordaremos apenas estes por serem os mais comuns.
+
+Contudo, para que a importação seja feita de forma adequada há a necessidade de que os dados estejam tabulados e organizados de forma correta, isto é: observações nas LINHAS, variáveis nas COLUNAS e cada coluna representando uma única variável.
+
+<center>
+<img src="img/tidy.png" width=1000 height=1000>
+</center>
+
+Existem diversos pacotes e funções para importação de dados, as 3 a seguir são apenas opções:
+
+ - Leitura de arquivos .txt: `read.table()`.
+ - Leitura de arquivos .csv: `read.csv()`.
+ - Leitura de arquivos .xlsx: `gdata::read.xls()`.
+
+Em geral, a leitura de arquivos externos gera um data frame e cabe ao usuário verificar se os dados possuem cabeçalho, qual o formato dos dados, separador, decimal e dentre outras informações para correta leitura dos dados no R. Além disso, após a leitura, é de suma importância verificar se os formatos das variáveis foram interpretados corretamente e, caso não tenham sido, convertê-las (em geral fazendo uso das funções do tipo `as.` já discutidas).
+
+Lembre-se de ler a documentação da função a fim de compreender a utilização dos argumentos para especificá-los de modo que a leitura dos dados seja feita de forma correta. Vejamos um exemplo para cada formato:
+
+## txt
+
+```{r}
+dados_txt <- read.table(file = "MingotiAnA4.txt",
+                        header = TRUE,
+                        sep = '\t',
+                        dec = '.')
+
+head(dados_txt)
+```
+
+## csv
+
+```{r}
+dados_csv <- read.csv(file = "MingotiAnA4.csv",
+                      header = TRUE,
+                      sep = ';',
+                      dec = '.')
+
+head(dados_csv)
+```
+
+## xlsx
+
+```{r}
+dados_xlsx <- gdata::read.xls(xls = "MingotiAnA4.xlsx", 
+                              sheet = 1, 
+                              header = TRUE)
+
+head(dados_xlsx)
+```
+
+
+---
+
+# Programação 
+
+Através da programação é possível automatizar processos, isto é, tarefas que seriam feitas manualmente por seres humanos passam a ser realizadas total ou parcialmente pelo computador. A sequência de passos a ser seguida para realização de uma tarefa é chamada de algoritmo. Para que o computador realize esta sequência de passos é necessário que isso esteja especificado de uma forma que a máquina entenda, isto é, através de uma linguagem de programação.
+
+As estruturas existentes nas linguagens são as mesmas e, por este motivo, é interessante compreender bem estas estruturas de forma genérica para que seja mais simples generalizá-las para diferentes linguagens de programação.
+
+Entenda: é mais fácil você aprender a lógica (que é geral e genérica) antes da linguagem (que é única e segue padrões próprios). 
+
+Leia o post [Algoritmos e Lógica de Programação](https://lineu96.github.io/st/img/post/logprog.html).
+
+Vamos discutir como as estruturas genéricas, isto é, presentes em qualquer linguagem de programação, funcionam em R. 
+
+Alguns dos tópicos importantes já foram vistos quando as estruturas de dados em R foram apresentadas, como os operadores aritméticos (soma, subtração, divisão, etc), os operadores relacionais (maior, menor, igual, etc) e operadores  lógicos (e, ou e não). Mas vamos passar por eles novamente a fim de varrer todas as ferramentas necessárias para fins de programação.
+
+---
+
+## Operadores aritiméticos
+
+Os operadores aritméticos servem para realizar operações matemáticas básicas. As representações das operações básicas em R são:
+
+| Operador 	  |          Operação         	|
+|:----------:	|:-------------------------:	|
+|     +    	  |           Adição          	|
+|     -    	  |         Subtração         	|
+|     *    	  |       Multiplicação       	|
+|     /    	  |          Divisão          	|
+|     ^    	  |       Potência            	|
+|    exp() 	  |       Exponencial         	|
+|    sqrt()	  |       Raiz quadrada       	|
+| factorial() |       Fatorial            	|
+|    log()  	|    Logaritmo              	|
+|    abs()    |     Valor absoluto          |
+|   round()   |     Arredondamento          |
+|  ceiling()  |  Arredondamento para cima   |
+|   floor()   | Arredondamento para baixo   |
+
+
+Os operadores seguem uma hierarquia, ou seja, uma ordem de precedência. Inicialmente são efetuadas as operações entre parênteses seguindo a ordem: exponenciação, multiplicação/divisão e por fim adição/subtração.
+
+---
+
+## Operadores relacionais
+
+Os operadores relacionais são utilizados para comparar valores de variáveis e sempre retornam valores lógicos, ou seja, verdadeiro ou falso. No R os operadores relacionais são:
+
+| Operador 	|      Operação      	|
+|:--------:	|:------------------:	|
+|     >    	|      Maior que     	|
+|     <    	|      Menor que     	|
+|    >=    	| Maior ou igual que 	|
+|    <=    	| Menor ou igual que 	|
+|    ==    	|        Igual       	|
+|    !=    	|      Diferente     	|
+
+---
+
+## Operadores lógicos
+
+Os operadores lógicos, assim como os relacionais, retornam resultados lógicos. Contudo sua finalidade é outra. Diferentemente dos aritméticos eles servem para comparar outros resultados lógicos. Existem 3 operadores lógicos: E, OU e NÃO; representados no R por &,| e !, respectivamente. 
+
+Os operadores lógicos são os últimos da hierarquia de precedência, pois inicialmente são efetuadas as operações aritméticas, depois as relacionais e, por fim, as operações lógicas.
+
+---
+
+## Estruturas condicionais
+
+Uma estrutura condicional é utilizada quando a ação a ser tomada depende de uma condição ser ou não satisfeita, algo como: se tal coisa acontecer faça isso, senão faça aquilo.
+
+Podemos trabalhar com condicionais simples, compostas e aninhadas. Há ainda uma estrutura condicional chamada estrutura de escolha:
+
+### Condicional simples
+
+Quando uma ação é tomada apenas se a condição de interesse for verdadeira. Genericamente:
+
+```{r, eval=FALSE}
+if(<condição>){
+    <comandos a ser executados caso seja satisfeita a condição>
+}
+```
+
+Considere que estamos interessados em verificar se um valor armazenado em uma variável x é maior que 100.
+
+```{r}
+x <- 150
+
+if (x > 100){
+  print("Este número é maior que 100")
+}
+```
+
+Note como no caso acima caso o valor não seja maior que 100 nenhuma ação será tomada.
+
+### Condicional composta
+
+Quando uma ação é tomada quando a condição de interesse for verdadeira e outra for tomada quando ela for falsa. Genericamente:
+
+```{r, eval=FALSE}
+if(<condição>) {
+    <comandos a ser executados caso seja satisfeita a condição>
+} else {
+   <comandos a ser executados caso NÃO seja satisfeita a condição>
+}
+```
+
+Consideremos o mesmo exemplo anterior, mas agora estamos interessados em retornar duas mensagens diferentes: uma para caso o número seja maior que 100 e outra para caso não seja:
+
+```{r}
+x <- 25
+
+if (x > 100) {
+  "Este número é maior que 100"
+} else {
+  "Este número NÃO é maior que 100"
+}
+```
+
+
+### Condicional aninhada
+
+Quando há mais de uma situação. Neste caso necessitamos de diversas condicionais, uma dentro da outra. Genericamente:
+
+```{r, eval=FALSE}
+
+if (<condição>) {
+  <comandos a ser executados caso seja satisfeita a condição>
+} else if(<condição>) {
+  <comandos a ser executados caso seja satisfeita a segunda condição>
+} else {
+  <comandos a ser executados caso nenhuma condição seja satisfeita>
+}
+```
+
+Desta forma podemos ampliar o exemplo anterior adicionando mais uma condição:
+
+```{r}
+x <- 100
+
+if (x > 100) {
+  "Este número é maior que 100"
+} else if(x == 100) {
+  "Este número é IGUAL a 100"
+} else {
+  "Este número NÃO é maior que 100"
+}
+```
+
+---
+
+### Estrutura de escolha
+
+A estrutura de escolha é uma opção bem mais simples que a solução de condicionais aninhadas. Genericamente:
+
+```{r, eval=FALSE}
+switch(<variável>, 
+       caso1 (valor da variável) = valor1 (output), 
+       caso2 = valor2, 
+       .
+       .
+       .
+       casoN = valorN)
+
+
+
+```
+
+Para construção de uma sentença utilizando `switch()` podemos fazer uso dos índices:
+
+```{r}
+y <- 2
+
+x <- switch(
+  y, # variável que será utilizada
+  "primeira mensagem",  # output se y = 1
+  "segunda mensagem",   # output se y = 2
+  "terceira mensagem",  # output se y = 3
+  "quarta mensagem"     # output se y = 4
+)
+
+x
+```
+
+Também é possível utilizar o `switch()` com o valor que a variável analisada assume:
+
+```{r}
+k = "a"
+
+w = switch(
+  k,
+  "a" = 1, # output se k="a"
+  "b" = 2, # output se k="b"
+  "c" = 3, # output se k="c"
+  "d" = 4  # output se k="d"
+)
+
+print (w)
+
+```
+
+
+---
+
+## Estruturas de repetição
+
+As estruturas de repetição permitem executar mais de uma vez um mesmo bloco de código sob determinadas condições quantas vezes forem necessárias. Por se tratar de uma ou mais operações que se repetem, também são chamadas de laços interativos ou loops.  Temos 3 ferramentas para construir loops no R: o **enquanto**, o **repita** e o **para**.
+
+### Enquanto
+
+A primeira forma de se utilizar uma estrutura de repetição é com o enquanto, de tal forma que dizemos: “enquanto a condição não for aceita faça tal coisa”. Normalmente a condição está associada a um contador. Genericamente:
+
+```{r, eval=FALSE}
+while(<condição a ser satisfeita>){
+  <conjunto de tarefas>
+  contador = contador+incremento  
+}
+```
+
+Um exemplo simples:
+
+```{r}
+x <- 1
+
+while(x < 15){
+  x = x + 2
+  print(x)
+}
+```
+
+
+### Repita
+
+É uma estrutura extremamente parecida com o enquanto, porém é logicamente inversa. Trata-se de uma estrutura alternativa ao enquanto em que o teste lógico é feito no final da estrutura, e não no começo. Compare:
+
+ - Enquanto a condição não for aceita faça tal coisa.
+
+ - Faça tal coisa até que a condição seja aceita.
+
+No R essa estrutura sempre vem acompanhada de um **if** e um **break** para que o loop seja encerrado. Genericamente:
+
+```{r, eval=FALSE}
+repeat{
+  <conjunto de tarefas>
+  if(<condição>){
+    break
+  }
+}
+```
+
+Um exemplo simples:
+
+```{r}
+x <- 0
+
+repeat {
+  x = x + 2
+  if (x > 30){
+    break
+  }
+  print(x)
+}
+```
+
+
+### Para
+
+O para é uma das estruturas mais utilizadas e possui uma vantagem sobre as outras duas apresentadas: ela é auto incrementável, isto é, não há necessidade de especificar que uma variável contadora recebe ela mesma mais um incremento, o para faz isso automaticamente o que exige menos código para realização de uma tarefa que exige repetição. Genericamente:
+
+```{r, eval=FALSE}
+for(<índice> in <valores>){
+  <comandos>
+}
+```
+
+Um exemplo simples:
+
+```{r}
+for(i in 1:10){
+    print(i)
+}
+```
+
+---
+
+### Extra
+
+Existe uma função no R chamada `ifelse()` que pode facilitar as tarefas em algumas situações, verifique.
+
+Existe um operador chamado `next` que pode ser utilizado quando desejamos que uma iteração seja ignorada e que a próxima seja executada normalmente, por exemplo, caso estejamos interessados em printar em tela os números de 1 a 10 EXCETO 5 e 7:
+
+```{r}
+for(i in 1:10){
+  if(i == 5 | i == 7)
+    next
+  print (i)}
+```
+
+O `break`, apresentado na estrutura `repeat` pode ser usado para forçar a parada de outros loops, veja:
+
+```{r}
+for(i in 1:10){
+  if(i == 8)
+    break
+  print (i)}
+```
+
+---
+
+# Família apply
+
+A família apply é um conjunto de funções que servem como alternativa aos loops em R. São úteis para melhorar o fluxo de trabalho e reduzir o tempo computacional. As mais utilizadas são: `apply`, `tapply`, `laaply`, `sapply`. Outras menos utilizadas são: `mapply`, `eapply`, `rapply`, etc.
+
+## `apply`
+
+Utiliza-se a `apply` quando temos uma matriz ou um dataframe e desejamos aplicar a mesma função a todas as linhas ou todas as colunas.
+
+```{r, eval=FALSE}
+apply(X, MARGIN, FUN, ...)
+```
+
+X = matriz ou dataframe, MARGIN = 1 para cálculos em linhas; 2 para cálculos em colunas, FUN = função a ser aplicada.
+
+Vamos aplicar a função `apply` a uma matriz:
+
+ - Gerando uma matriz 4x4:
+
+```{r}
+matriz <- matrix(floor(runif(16, 0, 15)), 
+                 nrow = 4, 
+                 ncol = 4)
+
+matriz
+```
+
+ - Obtendo a média das linhas:
+
+```{r}
+apply(matriz, MARGIN = 1, FUN = mean)
+```
+
+- Obtendo a média das colunas:
+
+```{r}
+apply(matriz, MARGIN = 2, FUN = mean)
+```
+
+---
+
+## `tapply`
+
+Com a `tapply` é possível obter medidas descritivas de variáveis para cada nível de uma outra variável disponível nos dados.
+
+```{r, eval=FALSE}
+tapply(X, INDEX, FUN, ...)
+```
+
+X = coluna de uma matriz ou dataframe que será utilizada para fazer os cálculos,
+INDEX = é a coluna de uma matriz ou dataframe que contém os níveis, FUN = função a ser aplicada.
+
+Vamos considerar o dataset `iris` nativo do R e obter a média da variável Sepal.Length para cada nível da variável Species:
+
+
+```{r}
+tapply(X = iris$Sepal.Length, INDEX = iris$Species, FUN = mean)
+```
+
+---
+
+## `laaply` e `sapply`
+
+O `laaply` e a `sapply` são usadas quando temos uma lista e queremos aplicar a mesma função a cada elemento da lista. Utilizando a `laapply` o resultado será uma lista já o resultado da `sapply` será um vetor.
+
+```{r, eval=FALSE}
+lapply(X, FUN, ...)
+```
+
+X = é uma lista, FUN = função a ser aplicada em cada elemento da lista.
+
+Considere o conjunto de dados nativo do R `women`. Este data set é um data frame tem duas variávais: height e weight. 
+
+ - Vamos convertê-lo em uma lista:
+
+```{r}
+women2 <- as.list(women)
+women2
+```
+
+ - E obter a média para cada elemento da lista pelas duas formas:
+
+```{r}
+lapply(X = women2, FUN = mean)
+sapply(X = women2, FUN = mean)
+```
+
+---
+
+Recomendo fortemente a leitura dos seguintes materiais, os quais usei como base para produção desse texto:
+
+ - [CE083 - Estatística Computacional I, UFPR](http://leg.ufpr.br/~fernandomayer/aulas/ce083/index.html)
+
+ - [The R Project for Statistical Computing](https://www.r-project.org/)
+
+ - [About RStudio](https://rstudio.com/about/)
+
+ - [História do R](https://www.ufrgs.br/wiki-r/index.php?title=Hist%C3%B3ria_do_R)
+
+ - [Linguagem R – Por que é hora de aprender?](http://datascienceacademy.com.br/blog/linguagem-r-por-que-e-hora-de-aprender/)
+
+ - [R e RStudio - Uma Visão Geral para os primeiros passos](https://rpubs.com/cassiorampinelli/488999)
+
+ - [R for Data Science](https://r4ds.had.co.nz/)
+
+ - [Uma Breve Introdução ao R](http://www.cienciaedados.com/uma-breve-introducao-ao-r/)
+
+---
+
+Críticas e sugestões a este material sempre serão bem vindas.
+
+Para entrar em contato comigo, envie uma mensagem para <lineuacf@gmail.com>.
+
+---
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

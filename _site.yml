@@ -1,0 +1,61 @@
+name: "my-website"
+
+output_dir: "."
+
+navbar:
+
+  title: "Minicurso R"
+
+
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+      
+    - text: "Material"
+      icon: fa-list-ol
+      menu:
+      
+        - text: "Histórico e Primeiro contato"
+          icon: fa-arrow-right
+          href: post_r1.html
+        
+        - text: "Estruturas, seleção e indexação"
+          icon: fa-arrow-right
+          href: post_r2.html
+        
+        
+        - text: "Importação e Programação"
+          icon: fa-arrow-right
+          href: post_r3.html
+        
+        - text: "Análise Exploratória"
+          icon: fa-arrow-right
+          href: post_r4.html
+  
+  right:
+    - text: "Lineu A.C.F"
+      icon: fa-user 
+      href: https://lineu96.github.io/st/
+      
+    - icon: fa-github 
+      href: https://github.com/lineu96
+
+        
+output:
+  html_document:
+    theme: cerulean
+    # cerulean 
+    highlight: textmate
+    #include:
+    #  after_body: footer.html
+    #css: styles.css
+
+    # THEMES
+    # default, cerulean, journal, 
+    # flatly, darkly, readable, 
+    # spacelab, united, cosmo, 
+    # lumen, paper, sandstone, 
+    # simplex, and yeti
+    
+    

@@ -1,0 +1,813 @@
+---
+output:
+  html_document:                    # Classe de documento.
+    toc: true                       # Exibir sum?rio.
+    toc_depth: 2                    # Profundidade do sum?rio.
+    toc_float:                      # Sum?rio flutuante na borda.
+      collapsed: true
+      smooth_scroll: true
+    number_sections: true           # Se??es numeradas.
+    theme: cerulean
+    #spacelab
+    #default,cerulean,journal,flatly,readable,spacelab,
+    #united,cosmo,lumen,paper,sandstone,simplex,yeti
+    
+    highlight: espresso
+    #default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, and textmate
+    #css: styles.css                 # Caminho para arquivo CSS.
+    fig_width: 7                    # Lagura das figuras.
+    fig_height: 6                   # Altura das figuras.
+    fig_caption: true               # Exibica??o de legenda.
+    fig_align: 'center'
+#    code_folding: hide              # Esconder/exibir bloco de c?digo.
+#    keep_md: true                   # Manter o arquivo md.
+    #template: quarterly_report.html # Caminho para o template.  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+---
+
+<font size="8"> 
+<p align=”center”> <b> Primeiros Passos com o R </b> </center>
+</font>
+
+<font size="5"> 
+<p align=”center”> <b> Parte 2 - Estruturas, seleção e indexação </b> </center>
+</font>
+
+<font size="4"> 
+<p align=”center”> [Lineu Alberto Cavazani de Freitas](https://lineu96.github.io/st/) </center>
+</font> 
+
+---
+
+# Estruturas
+
+No R podemos gerar estruturas como:
+
+1. **Vetores** (unidimensional, linha ou coluna).
+2. **Matrizes** (bidimensional, linha e coluna).
+4. **Data Frames** (vetores concatenados).
+3. **Listas** (cada elemento pode ser uma estrutura).
+
+Para indexar e selecionar elementos pertencentes às diferentes estruturas existem operadores como:
+
+ - `[ ]`: é um seletor que retorna um objeto da mesma classe que o objeto original.
+
+ - `[[ ]]` é usado para extrair elementos de uma lista ou data frame.
+ 
+ - `$` é usado para extrair elementos nomeados de uma lista ou data frame.
+
+---
+
+Vamos discutir as principais características das estruturas mencionadas:
+
+---
+
+# Vetores
+
+Vetores são estruturas de dados básicas do R, que permitem armazenar um conjunto de valores numéricos, caracteres ou lógicos num único objeto. Podemos criar vetores através da função `c()`:
+
+```{r}
+vetor1 <- c(1,2,3) # Vetor numérico
+class(vetor1)
+
+vetor2 <- c("palavra","123") # Vetor com caracteres
+class(vetor2)
+
+vetor3 <- c(TRUE, TRUE, FALSE, TRUE, FALSE) # Vetor lógico
+class(vetor3)
+```
+
+---
+
+Outra forma de obter vetores lógicos é através de uma expressão condicional em que utiliza-se um operador lógico. Os operadores lógicos utilizados no R são:
+
+| Operador 	|      Operação      	|
+|:--------:	|:------------------:	|
+|     >    	|      Maior que     	|
+|     <    	|      Menor que     	|
+|    >=    	| Maior ou igual que 	|
+|    <=    	| Menor ou igual que 	|
+|    ==    	|        Igual       	|
+|    !=    	|      Diferente     	|
+
+Além dos operadores lógicos temos os operadores relacionais: &, | e ! (e, ou e não).
+
+Podemos testar, por exemplo, se cada um dos elementos de um dado vetor é exatamente igual a um valor, bem como qualquer outra das operações disponíveis e ainda combiná-las fazendo uso dos operadores & e |. Considere o vetor:
+
+```{r}
+vetor5 <- c(3, 0, 0, 2, 1, 5, 1, 0, 1, 0)
+```
+
+ - Verificando quais dos elementos são iguais a 0.
+ 
+```{r}
+vetor5 == 0
+```
+
+ - Verificando quais dos elementos são maiores que 1.
+ 
+```{r}
+vetor5 > 1
+```
+
+ - Verificando quais dos elementos são diferentes de 2.
+
+```{r}
+vetor5 != 2
+```
+
+ - Verificando quais dos elementos estão entre 0 e 3.
+ 
+```{r}
+vetor5 >= 0 & vetor5 <=3
+```
+
+ - Verificando quais dos elementos são maiores ou iguais a 0 OU menores ou iguais a 3.
+ 
+```{r}
+vetor5 >= 0 | vetor5 <=3
+```
+
+---
+
+Caso estejamos interessados em saber quantos dos elementos atendem a condição de interesse, basta somar o vetor lógico resultante com a função `sum()` que soma elementos de um vetor. Internamente o R interpreta resultados TRUE como 1 e FALSE como 0. Então, no caso que verificamos quais dos elementosestão entre 0 e 3, podemos verificar quantos elementos atendem a condição da seguinte forma:
+
+```{r}
+logico <- vetor5 >= 0 & vetor5 <=3
+sum(logico)
+```
+
+Através da função `length()` verificamos quantos elementos há no vetor, e podemos obter dessa forma a proporção de elementos que atendem a condição:
+
+```{r}
+length(logico)
+
+sum(logico)/length(logico)
+```
+
+---
+
+Um tipo especial de vetor é chamado fator, trata-se de um vetor de caracteres no qual os elementos são tratados como níveis:
+
+```{r}
+fator <- factor(c("alto", "medio", "baixo", "medio", "alto", "alto", "baixo"))
+class(fator)
+fator
+```
+
+A ordenação dos níveis pode ser alterada através do argumento `levels`:
+
+```{r}
+fator <- factor(c("alto", "medio", "baixo", "medio", "alto", "alto", "baixo"),
+                levels = c("alto", "medio", "baixo"))
+class(fator)
+fator
+```
+
+---
+
+Os elementos pertencentes ao vetor definem sua classe e lembre-se: todos os elementos do vetor devem ser de mesma classe. Caso isso não seja verdade o R forçará os elementos a mudarem de classe, veja:
+
+```{r}
+vetor5 <- c(1,"palavra", FALSE) 
+class(vetor5)
+```
+
+Mesmo possuindo um elemento de cada tipo o R forçou com que todo o vetor passasse a ser da classe character.
+
+---
+
+## Sequências {.tabset .tabset-fade}
+
+Eventualmente, pode ser necessário gerar números aleatórios ou sequências numéricas e armazenar os valores em um vetor. Vejamos algumas funções com estes objetivos (lembre-se de ler a documentação e verificar os argumentos):
+
+### **`seq()`**
+
+A função `seq()` é utilizada para gerar sequências:
+
+```{r}
+seq(from = 1, to =10)
+seq(from = 1, to = 10, by = 2)
+seq(from = 1, to = 10, length.out = 5)
+```
+
+### `rep()`
+
+A função `rep` é utilizada para repetir números:
+
+```{r}
+rep(1, times = 10)
+rep(c(1, 2, 3), times =  5)
+rep(c(1, 2, 3), each = 5)
+```
+
+### `runif`
+
+A função `runif()` gera números de uma distribuição uniforme, isto é, gera $n$ números aleatórios entre um limite inferior e um limite superior, em que todos os valores tem a mesma probabilidade de serem sorteados:
+
+```{r}
+runif(n = 10, min = 0, max = 1)
+runif(n = 10, min = 10, max = 15)
+```
+
+---
+
+## Operações matemáticas em vetores
+
+Operações podem ser feitas entre um vetor e um número, como por exemplo multiplicar todos os elementos de um vetor por uma quantidade. Também é possível realizar operações entre vetores de mesmo comprimento.
+
+```{r}
+vetor <- round(runif(10, min=1, max=10))
+vetor
+
+vetor+1
+vetor*2
+
+vetor+vetor
+vetor^2
+
+```
+
+Além disso podemos obter algumas medidas relacionadas a um vetor, tais como comprimento, média, desvio padrão, variância, soma dos elementos, etc. Estas medidas serão vistas com mais detalhes no material em que será apresentada uma análise exploratória completa.
+
+```{r}
+length(vetor) # comprimento
+mean(vetor) # média
+var(vetor) # variância
+sd(vetor) # desvio padrão
+sum(vetor) # soma
+range(vetor) # minimo e maximo
+fivenum(vetor) # 5 números de Tukey
+```
+
+---
+
+## Indexação para Vetores
+
+O principal operador para seleção em vetores são os colchetes. Vejamos alguns exemplos:
+
+ - Criando um vetor numérico:
+
+```{r}
+vetor <- c(1, 23, 3, 47, 90, 6, 7, 8, 5, 6, 10, 45)
+```
+ 
+ - Selecionando o elemento de posição 5:
+
+```{r}
+vetor[5]
+```
+
+ - Selecionando os elementos da posição 1, 2, 3, 4 e 6:
+ 
+```{r}
+vetor[c(1,2,3,4,6)]
+```
+ 
+ - Selecionando os primeiros 3 elementos:
+ 
+```{r}
+vetor[1:3]
+```
+ 
+ - Selecionando todos os elementos exceto o da terceira posição:
+ 
+```{r}
+vetor[-3]
+```
+ 
+ - Selecionando todos os elementos exceto o primeiro e o quarto:
+ 
+```{r}
+vetor[-c(1,4)]
+```
+ 
+---
+
+## Seleção Condicional para Vetores
+
+O uso da seleção condicional é feito quando necessitamos obter elementos do vetor que atendem determinada condição. Na prática, podemos estar interessados em um vetor resultado composto de TRUE ou FALSE ou dos elementos que atendem a dondição de interesse. Vejamos de que forma podemos obter tais resultados:
+
+ - Criando um novo vetor numérico:
+
+```{r}
+vetor2 <- c(18, 12, 31, 56, 7, 5, 9)
+```
+ 
+ - Selecionando os elementos do vetor maiores que 15:
+
+```{r}
+vetor2 > 15
+vetor2[vetor2 > 15]
+```
+
+ - Selecionando os elementos do vetor entre 30 e 100:
+
+```{r}
+vetor2 > 30 & vetor2 < 100
+
+vetor2[vetor2 > 30 & vetor2 < 100] 
+```
+
+ - Selecionando os elementos do vetor que são maiores que 30 ou menores que 100:
+
+```{r}
+vetor2 > 30 | vetor2 < 100
+vetor2[vetor2 > 30 | vetor2 < 100]
+```
+
+---
+
+# Matrizes
+
+Matrizes são estruturas que, assim como os vetores, são capazes de armazenar apenas um tipo de informação. Isto é, todos os elementos da matriz devem ser de alguma das classes básicas: numeric, integer, character, complex ou logical. Contudo as matrizes são estruturas bidimensionais, isso significa que possuem linha e coluna. No R, para criação de uma matriz utiliza-se a função `matrix()` na qual o usuário informa os elementos sequencialmente por coluna.
+
+```{r}
+matriz <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3)
+class(matriz)
+matriz
+```
+
+Para alterar o preenchimento de forma que seja feito por linha basta utilizar o argumento lógico `byrow`. Reforçando: sempre leia a documentação da função.
+
+```{r}
+matriz2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = TRUE)
+matriz2
+```
+
+---
+
+A função `dim()` tem duas finalidades: a primeira delas é verificar a dimensão da estrutura, isto é, o número de linhas e o número de colunas. A segunda é gerar uma matriz através de um vetor. Outra forma de verificar número de linhas e colunas é através das funções `ncol()` e `nrow()`.
+
+ - Gerando um vetor:
+```{r}
+matriz3 <- 1:9
+matriz3
+```
+
+ - Verificando a dimensão:
+```{r}
+dim(matriz3)
+```
+
+ - Atribuindo uma nova dimensão:
+```{r}
+dim(matriz3) <- c(3,3)
+matriz3
+```
+
+ - Verificando a dimensão:
+```{r}
+dim(matriz3)
+```
+
+ - Verificando o número de colunas:
+```{r}
+ncol(matriz3)
+```
+
+ - Verificando o número de linhas:
+```{r}
+nrow(matriz3)
+```
+
+---
+
+Para acrescentar linhas e colunas a uma matriz existente basta utilizar as funções `rbind()` e `cbind()` para linha e coluna respectivamente.
+
+ - Criando uma matriz:
+```{r}
+matriz4 <- matrix(1:4, nrow = 2, ncol = 2)
+matriz4
+```
+
+ - Adicionando uma nova linha:
+```{r}
+rbind(matriz4, c(10,10)) 
+```
+
+ - Adicionando uma nova coluna:
+```{r}
+cbind(matriz4, c(20,20))
+```
+
+---
+
+Outras funções importantes para quando trabalhamos com matrizes estão relacionadas à transposição, inversão e criação de matrizes diagonais.
+
+ - Para obter a transposta de uma matriz, basta uitlizar a função `t()`:
+
+```{r}
+t(matriz4)
+```
+
+ - A inversa pode ser obtida através da função `solve()`:
+
+```{r}
+solve(matriz4)
+```
+
+ - Uma matriz diagonal pode ser criada com a função `diag()`:
+
+```{r}
+diag(c(1, 4, 6))
+```
+
+---
+
+Todas as operações matemáticas que fazem uso de matrizes podem ser feitas no R, contudo com cautela, principalmente quando trabalhamos com multiplicação de matrizes.
+
+Vamos considerar duas matrizes:
+
+```{r}
+matrizA <- matrix(seq(1:9), nrow = 3, ncol = 3)
+matrizA
+matrizB <- matrix(rep(c(1, 2, 3), 3), nrow = 3, ncol = 3)
+matrizB
+```
+
+E vejamos como funcionam as operações adição, subtração, multiplicação por escalar, divisão, multiplicação elemento a elemento e multiplicação matricial.
+
+ - Adição:
+
+```{r}
+matrizA + 1
+```
+ 
+ - Subtração:
+
+```{r}
+matrizB - 2
+```
+ 
+ - Multiplicação:
+
+```{r}
+matrizA * 2
+```
+ 
+ - Divisão:
+
+```{r}
+matrizA / 2
+```
+ 
+ - Multiplicação elemento a elemento:
+
+```{r}
+matrizA * matrizB
+```
+ 
+ - Multiplicação matricial:
+
+```{r}
+matrizA %*% matrizB
+```
+
+## Indexação e seleção condicional para Matrizes
+
+A indexação funciona de forma muito parecida com o que foi apresentado para vetores, contudo precisamos especificar agora a linha e a coluna para selecionar elementos pertencentes à matriz. Considerando uma das matrizes anteriormente utilizadas:
+
+```{r}
+matrizA
+```
+
+ - Selecionando o elemento na primeira linha e segunda coluna:
+
+```{r}
+matrizA[1,2]
+```
+
+ - Selecionando todos os elementos da primeira linha:
+
+```{r}
+matrizA[1,]
+```
+
+ - Selecionando todos os elementos da segunda coluna:
+
+```{r}
+matrizA[, 2]
+```
+
+ - Selecionando todos os elementos da segunda coluna porém forçando o output ser uma matriz:
+
+```{r}
+matrizA[, 2, drop = FALSE]
+```
+
+---
+
+E alguns exemplos para seleção condicional em matrizes são:
+
+ - Selecionando elementos que são iguais a 1:
+
+```{r}
+matrizA == 1
+matrizA[matrizA == 1]
+```
+
+ - Selecionando elementos maiores que 4:
+
+```{r}
+matrizA > 4
+matrizA[matrizA > 4]
+```
+
+ - Selecionando elementos entre 4 e 5:
+
+```{r}
+matrizA >=4 & matrizA <= 5
+matrizA[matrizA >=4 & matrizA <= 5]
+```
+
+ - Selecionando elementos iguais a 1 ou 5:
+
+```{r}
+matrizA == 1 | matrizA == 5
+
+matrizA[matrizA == 1 | matrizA == 5]
+```
+
+---
+
+# Data Frames
+
+Um data frame é composto por diversos vetores de mesmo tamanho que são postos lado a lado numa mesma estrutura. Algo interessante é que não necessariamente estes vetores precisam ser do mesmo tipo. 
+
+É o formato mais utilizado para se trabalhar com dados pois comporta a maior parte das situações. Por exemplo, imagine que cada linha representa um indivíduo e cada coluna uma característica de interesse como peso, altura, sexo, etc. Com o data frame é possível organizar a informação de diversos indivíduos e características numa mesma estrutura.
+
+Para criar um data frame no R utilizamos a função `data.frame()` e todas as funções para descrição da estrutura funcionam.
+
+```{r}
+
+df <- data.frame(id = c(1,2,3,4),
+                 nome = c("Pedro", "Maria", "Paulo", "Ana"),
+                 altura = c(1.80, 1.74, 1.90, 1.65),
+                 peso = c(85, 70, 97, 72),
+                 sexo = c("M", "F", "M", "F"))
+
+df
+names(df)
+class(df)
+dim(df)
+length(df)
+str(df)
+nrow(df)
+ncol(df)
+```
+
+Tal como para matrizes, as funções `cbind()` e `rbind()` funcionam, contudo é possível acrescentar linhas e colunas de outras maneiras.
+
+```{r}
+cbind(df, coluna = c(0,0,0,0))
+
+rbind(df, data.frame(id = 0,
+                     nome = "nome",
+                     altura = 0,
+                     peso = 0,
+                     sexo = "x"))
+```
+
+No caso de acrescentar uma nova coluna a um data frame é possível utilizar o operador $.
+
+```{r}
+df$coluna_nova <- c(0,0,0,0)
+df
+```
+
+## Indexação e seleção condicional para data frames
+
+Para indexação ainda é possível utilizar os colchetes, tal como o que foi visto para vetores e matrizes. O operador $ também é válido para selecionar uma coluna inteira.
+
+ - Selecionando o elemento na primeira linha e quarta coluna:
+```{r}
+df[1,4]
+```
+
+ - Selecionando toda a terceira linha:
+```{r}
+df[3,]
+```
+
+ - Selecionando toda a segunda coluna:
+```{r}
+df[,2]
+```
+
+ - Selecionando a coluna nome através do operador \$:
+```{r}
+df$nome
+```
+
+---
+
+A seleção condicional pode ser feita de duas formas: uma que segue o mesmo raciocínio do que foi apresentado para as demais estruturas e outra que utiliza a função `subset()`. Se corretamente utilizadas, ambas retornam o mesmo resultado.
+
+ -  Selecionando todas as linhas do data frame em que a variável peso está entre 60 e 80:
+ 
+```{r}
+df[df$peso > 60 & df$peso < 80,]
+
+subset(df, peso > 60 & peso < 80)
+```
+
+---
+
+# Listas
+
+Uma lista pode ser interpretada como um caso especial de vetor, em que cada elemento pode ser uma diferente estrutura. Ou seja, em cada posição da lista podemos armazenar vetores, matrizes, data frames e até mesmo outras listas. Criamos listas através da função `list()`.
+
+```{r}
+lista <- list(vetor = c(runif(10)),
+              matriz = matrix(runif(9), nrow = 3, ncol = 3),
+              df = data.frame(x = runif(10), y = runif(10)))
+
+lista
+class(lista)
+names(lista)
+length(lista)
+str(lista)
+```
+
+## Indexação e seleção condicional para listas
+
+A indexação pode ser feita com os colchetes ou com o \$, o que muda nas duas abordagens é a estrutura do output. Utilizando os colchetes o resultado será uma lista, enquanto que com o \$ a estrutura será a mesma do elemento selecionado na lista. Uma outra forma que resulta no mesmo output do operador \$ é através do duplo colchete [[]].
+
+ - Utilizando o operador colchete para acessar o primeiro elemento da lista:
+```{r}
+a <- lista[1]
+class(a)
+a
+```
+
+ - Utilizando o operador \$ para acessar o primeiro elemento da lista:
+ 
+```{r}
+b <- lista$vetor
+class(b)
+b
+```
+
+ - Utilizando o operador duplo colchete para acessar o primeiro elemento da lista:
+ 
+```{r}
+c <- lista[[1]]
+class(c)
+c
+```
+
+---
+
+É possível ainda combinar os mecanismos de seleção vistos para acessar elementos de dentro da lista.
+
+ - Acessando os 3 primeiros elementos do vetor armazenado na lista:
+```{r}
+lista$vetor[1:3]
+```
+
+ - Acessando a segunda linha da matriz armazenada na lista:
+
+```{r}
+lista$matriz[2,]
+```
+
+ - Acessando a coluna nomeada como y do data frame armazenado na lista:
+```{r}
+lista$df$y
+```
+
+---
+
+O mesmo raciocínio é válido para seleção condicional.
+
+ - Selecionando elementos armazenados no vetor dentro da lista que estão entre 0,3 e 0,5:
+ 
+```{r}
+lista$vetor[lista$vetor>=0.3 & lista$vetor<0.5]
+```
+
+ - Selecionando elementos armazenados na matriz dentro da lista que estão entre 0,3 e 0,5:
+ 
+```{r}
+lista$matriz[lista$matriz>=0.3 & lista$matriz<0.5]
+```
+
+ - Selecionando elementos armazenados no data frame dentro da lista em que a variável nomeada como x apresenta valor maior que 0,6:
+ 
+```{r}
+subset(lista$df, x>0.6)
+```
+
+---
+
+# Coerção
+
+Em algumas situações podemos estar interessados em converter estruturas, ou seja, transformar uma estrutura em outra. A esta tarefa dá-se o nome de coerção. No R existem dois grupos de funções: as do tipo `is.` e as do tipo `as.`. As do primeiro tipo verificam se um objeto é de uma determinada classe, enquanto as do segundo são responsáveis pela conversão para uma nova classe.
+
+Considerando os exemplos:
+
+```{r}
+vetor = c(runif(10))
+
+matriz = matrix(runif(9), nrow = 3, ncol = 3)
+
+df = data.frame(x = runif(10), y = runif(10))
+```
+
+ - Verificando o tipo das estruturas:
+
+```{r}
+is.vector(vetor)
+is.matrix(matriz)
+is.data.frame(df)
+
+is.matrix(vetor)
+is.vector(matriz)
+is.factor(df)
+```
+
+ - Efetuando a coerção:
+
+```{r}
+as.matrix(vetor)
+as.data.frame(vetor)
+
+as.data.frame(matriz)
+as.vector(matriz)
+
+as.matrix(df)
+```
+
+---
+
+# Valores perdidos
+
+Valores perdidos, também chamados de missing, são informações que por algum motivo não puderam ser obtidas. Fique atento, um valor perdido não é 0. Valores perdidos são definidos como NA (not available).
+
+```{r}
+x <- c(1, NA, 3, 7, NA)
+x
+```
+
+A presença de valores perdidos não altera a classe do objeto:
+
+```{r}
+class(x)
+```
+
+E podemos verificar se existe algum NA no objeto através da função `is.na`.
+
+```{r}
+is.na(x)
+```
+
+Caso seja necessário excluir os valores ausentes pode-se usar a função `na.omit(x)`.
+
+```{r}
+na.omit(x)
+```
+
+
+Outros valores especiais similares ao NA são o NaN (not a number), Inf e -Inf (mais ou menos infinito).
+
+```{r}
+0/0
+1/0
+-1/0
+```
+
+---
+
+Recomendo fortemente a leitura dos seguintes materiais, os quais usei como base para produção desse texto:
+
+ - [CE083 - Estatística Computacional I, UFPR](http://leg.ufpr.br/~fernandomayer/aulas/ce083/index.html)
+
+ - [The R Project for Statistical Computing](https://www.r-project.org/)
+
+ - [About RStudio](https://rstudio.com/about/)
+
+ - [História do R](https://www.ufrgs.br/wiki-r/index.php?title=Hist%C3%B3ria_do_R)
+
+ - [Linguagem R – Por que é hora de aprender?](http://datascienceacademy.com.br/blog/linguagem-r-por-que-e-hora-de-aprender/)
+
+ - [R e RStudio - Uma Visão Geral para os primeiros passos](https://rpubs.com/cassiorampinelli/488999)
+
+ - [R for Data Science](https://r4ds.had.co.nz/)
+
+ - [Uma Breve Introdução ao R](http://www.cienciaedados.com/uma-breve-introducao-ao-r/)
+
+---
+
+Críticas e sugestões a este material sempre serão bem vindas.
+
+Para entrar em contato comigo, envie uma mensagem para <lineuacf@gmail.com>.
+
+---
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>post_r1.utf8.md</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #2a211c;
+    color: #bdae9d;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #bdae9d;  padding-left: 4px; }
+div.sourceCode
+  { color: #bdae9d; background-color: #2a211c; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ffff00; } /* Alert */
+code span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #44aa43; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #049b0a; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
+code span.do { color: #0066ff; font-style: italic; } /* Documentation */
+code span.dt { text-decoration: underline; } /* DataType */
+code span.dv { color: #44aa43; } /* DecVal */
+code span.er { color: #ffff00; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #44aa43; } /* Float */
+code span.fu { color: #ff9358; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+code span.op { } /* Operator */
+code span.pp { font-weight: bold; } /* Preprocessor */
+code span.sc { color: #049b0a; } /* SpecialChar */
+code span.ss { color: #049b0a; } /* SpecialString */
+code span.st { color: #049b0a; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #049b0a; } /* VerbatimString */
+code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Minicurso R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-list-ol"></span>
+     
+    Material
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="post_r1.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Histórico e Primeiro contato
+      </a>
+    </li>
+    <li>
+      <a href="post_r2.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Estruturas, seleção e indexação
+      </a>
+    </li>
+    <li>
+      <a href="post_r3.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Importação e Programação
+      </a>
+    </li>
+    <li>
+      <a href="post_r4.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Análise Exploratória
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://lineu96.github.io/st/">
+    <span class="fa fa-user"></span>
+     
+    Lineu A.C.F
+  </a>
+</li>
+<li>
+  <a href="https://github.com/lineu96">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<hr />
+<font size="8">
+<p align=”center”>
+<b> Primeiros Passos com o R </b>
+</center>
+<p></font></p>
+<font size="5">
+<p align=”center”>
+<b> Parte 1 - Histórico e Primeiro contato </b>
+</center>
+<p></font></p>
+<font size="4">
+<p align=”center”>
+<a href="https://lineu96.github.io/st/">Lineu Alberto Cavazani de Freitas</a>
+</center>
+<p></font></p>
+<hr />
+<div id="o-que-e-o-r" class="section level1">
+<h1><span class="header-section-number">1</span> O que é o R</h1>
+<p>O <a href="https://www.r-project.org/">R</a> é uma linguagem de programação voltada para fins estatísticos, isto é, focada em métodos para análise de dados que desde de sua criação foi amplamente difundida no meio acadêmico por ser gratuita. Contudo, saber utilizar a linguagem e suas principais ferramentas tem se tornado uma habilidade solicitada por aqueles que buscam profissionais com capacidades analíticas por se tratar de uma importante linguagem para ciência de dados e que, por esse motivo, vem se popularizando.</p>
+<p>O potencial do R é alto não só graças a forma da linguagem mas também por ser gratuito, possível instalar e utilizar em diversos sistemas operacionais e por possuir bibliotecas com funções para análise de dados provenientes de áreas de estudo específicas, os chamados pacotes. Uma série de pacotes é instalada junto com o R, mas muitos outros estão disponíveis na rede de distribuição do R (<a href="https://cran.r-project.org/mirrors.html">CRAN</a>). Atualmente, existem mais de 10 mil pacotes disponíveis.</p>
+<p>O objetivo deste material é apresentar, de forma breve, as principais características e o básico para se fazer uso da linguagem</p>
+<hr />
+<center>
+<img src="img/Rlogo.png" width=150 height=150>
+</center>
+<hr />
+</div>
+<div id="historico-do-r" class="section level1">
+<h1><span class="header-section-number">2</span> Histórico do R</h1>
+<p>A linguagem R foi criada em 1993 por <a href="https://www.stat.auckland.ac.nz/~ihaka/">Ross Ihaka</a> e <a href="https://www.linkedin.com/in/robert-gentleman-06845098/">Robert Gentleman</a> no <a href="https://www.auckland.ac.nz/en/science/about-the-faculty/department-of-statistics.html">Departamento de Estatística da Universidade de Auckland</a>, na Nova Zelândia.</p>
+<p>O R foi desenvolvido a partir da Linguagem S, criada na AT&amp;T Bell Labs por John Chambers, Rick Becker e Allan Wilks em 1976. Atualmente o R é desenvolvido pela equipe de Desenvolvimento do R (R Core Team), da qual John Chambers é um membro. O código fonte para o ambiente de software R é escrito principalmente em C, Fortran e R e está disponível gratuitamente sob a licença GNU General Public.</p>
+<hr />
+<center>
+<img src="img/rr.jpg" width=500 height=500>
+<figcaption>
+Robert Gentleman &amp; Ross Ihaka
+</figcaption>
+</center>
+<hr />
+<p>Assista ao vídeo <a href="https://youtu.be/fnGvDEkjZy0">“R”eflexões: um pouco de história e experiências com o R - Paulo Justiniano Ribeiro Jr</a>.</p>
+<hr />
+<p>Ao instalar o R é possível utilizar a interface de linha de comando nativa, contudo há também várias interfaces gráficas que auxiliam o trabalho em R, como o <a href="https://rstudio.com/products/rstudio/download/">RStudio</a>.</p>
+<hr />
+</div>
+<div id="rstudio" class="section level1 tabset tabset-fade">
+<h1><span class="header-section-number">3</span> Rstudio</h1>
+<p>Ao se trabalhar com R é interessante utilizar uma interface de desenvolvimento com o objetivo de facilitar o trabalho de forma a melhorar a visualização do código, instalação de pacotes, visualização de dados, dentre outras tarefas importantes para usuários R.</p>
+<p>O <a href="https://rstudio.com/products/rstudio/download/">RStudio</a> é um programa com uma interface mais amigável para se trabalhar com R. Possui vasta documentação gratuita na internet e está disponível para os mais famosos sistemas operacionais. Existem outras interfaces para se trabalhar com R, todavia abordaremos apenas o RStudio pois ele fornece a maioria dos recursos necessários e desejáveis para uma boa interface.</p>
+<hr />
+<center>
+<img src="img/RSlogo.png" width=200 height=200>
+</center>
+<hr />
+<p>Vejamos o aspecto da interface:</p>
+<hr />
+<div id="o-rstudio" class="section level2">
+<h2><span class="header-section-number">3.1</span> O Rstudio</h2>
+<center>
+<img src="img/rstudio.png" width=800 height=800>
+</center>
+</div>
+<div id="editor" class="section level2">
+<h2><span class="header-section-number">3.2</span> Editor</h2>
+<center>
+<img src="img/editor.png" width=800 height=800>
+</center>
+</div>
+<div id="console" class="section level2">
+<h2><span class="header-section-number">3.3</span> Console</h2>
+<center>
+<img src="img/console.png" width=800 height=800>
+</center>
+</div>
+<div id="environment-history" class="section level2">
+<h2><span class="header-section-number">3.4</span> Environment/ History</h2>
+<center>
+<img src="img/env.png" width=800 height=800>
+</center>
+</div>
+<div id="files-plots-packages-help" class="section level2">
+<h2><span class="header-section-number">3.5</span> Files/ Plots/ Packages/ Help</h2>
+<center>
+<img src="img/files.png" width=800 height=800>
+</center>
+</div>
+<div id="resumo" class="section level2">
+<h2><span class="header-section-number">3.6</span> Resumo</h2>
+<ul>
+<li><strong>Editor</strong>: Onde escrevemos os códigos (executamos com CTRL+ENTER).</li>
+<li><strong>Console</strong>: Onde os resultados são printados.</li>
+<li><strong>Environment</strong>: Mostra todos os objetos criados.</li>
+<li><strong>History</strong>: Mostra todos os códigos executados.</li>
+<li><strong>Files</strong>: Mostra os arquivos no diretório atual.</li>
+<li><strong>Plots</strong>: Mostra os outputs de códigos que geram gráficos.</li>
+<li><strong>Packages</strong>: Mostra os pacotes instalados.</li>
+<li><strong>Help</strong>: Mostra a documentação de funções e pacotes.</li>
+</ul>
+<p>Para obter todos os atalhos da interface digite pressione ALT+SHIFT+K.</p>
+<p>As imgagens representam o aspecto padrão do Rstudio. Contudo a disposição dos planos, cores e fontes são customizáveis e podem ser modificadas em <code>Tools &gt; Global Options</code>.</p>
+<hr />
+</div>
+</div>
+<div id="diretorio-de-trabalho" class="section level1">
+<h1><span class="header-section-number">4</span> Diretório de trabalho</h1>
+<p>Ao iniciar um trabalho com R o primeiro passo é definir o diretório de trabalho, isto é, a pasta do computador onde estão os arquivos que importaremos e para onde vão os arquivos que exportaremos. Fazemos isso através do comando <code>setwd()</code> e dentro da função especificamos o caminho até a pasta. Outra forma de realizar a mesma tarefa é através do atalho <code>CTRL+SHIFT+H</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">setwd</span>(<span class="st">&quot;~/Área de Trabalho/Rpost&quot;</span>)</a></code></pre></div>
+<p>Com a função <code>getwd()</code> verificamos o diretório atual.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">getwd</span>()</a></code></pre></div>
+<pre><code>## [1] &quot;/home/lacf14/Área de Trabalho/R post&quot;</code></pre>
+<hr />
+</div>
+<div id="script" class="section level1">
+<h1><span class="header-section-number">5</span> Script</h1>
+<p>Um script é um arquivo de texto com um conjunto de instruções para que uma tarefa seja executada em determinado aplicativo. Através de <code>File &gt; New file &gt; R script</code> ou <code>CTRL+SHIFT+N</code> iniciamos um script R, isto é, um arquivo com extensão .R.</p>
+<p>Os scripts são mostrados através de abas no editor do Rstudio. Lembre-se de salvar o script no diretório de trabalho com um nome simples evitando acentos, letras maiúsculas e símbolos.</p>
+<p>Quando digitamos comandos no editor e pressionamos <code>CTRL+ENTER</code> o código é executado e o resultado é mostrado no console. Caso digitemos o código diretamente no console, ele também será executado porém não será salvo no script.</p>
+<p>Uma boa prática é comentar passo a passo o script para que facilite o entendimento após certo tempo de trabalho ou mesmo o acesso de outros contribuidores. No R comentários são adicionados após o símbolo #, de forma que tudo após o símbolo não será interpretado como código.</p>
+<hr />
+</div>
+<div id="operacoes-matematicas" class="section level1">
+<h1><span class="header-section-number">6</span> Operações matemáticas</h1>
+<p>Os operadores aritméticos servem para realizar operações matemáticas básicas. As representações das operações básicas em R são:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Operador</th>
+<th align="center">Operação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">+</td>
+<td align="center">Adição</td>
+</tr>
+<tr class="even">
+<td align="center">-</td>
+<td align="center">Subtração</td>
+</tr>
+<tr class="odd">
+<td align="center">*</td>
+<td align="center">Multiplicação</td>
+</tr>
+<tr class="even">
+<td align="center">/</td>
+<td align="center">Divisão</td>
+</tr>
+<tr class="odd">
+<td align="center">^</td>
+<td align="center">Potência</td>
+</tr>
+<tr class="even">
+<td align="center">exp()</td>
+<td align="center">Exponencial</td>
+</tr>
+<tr class="odd">
+<td align="center">sqrt()</td>
+<td align="center">Raiz quadrada</td>
+</tr>
+<tr class="even">
+<td align="center">factorial()</td>
+<td align="center">Fatorial</td>
+</tr>
+<tr class="odd">
+<td align="center">log()</td>
+<td align="center">Logaritmo</td>
+</tr>
+<tr class="even">
+<td align="center">abs()</td>
+<td align="center">Valor absoluto</td>
+</tr>
+<tr class="odd">
+<td align="center">round()</td>
+<td align="center">Arredondamento</td>
+</tr>
+<tr class="even">
+<td align="center">ceiling()</td>
+<td align="center">Arredondamento para cima</td>
+</tr>
+<tr class="odd">
+<td align="center">floor()</td>
+<td align="center">Arredondamento para baixo</td>
+</tr>
+</tbody>
+</table>
+<p>Os operadores seguem uma hierarquia, ou seja, uma ordem de precedência. Inicialmente são efetuadas as operações entre parênteses seguindo a ordem: exponenciação, multiplicação/divisão e por fim adição/subtração.</p>
+<p>Para utilizar os operadores no R basta digitar os valores e a operação diretamente no console (caso queira ver somente o resultado) ou no script (caso deseje salvar o código num arquivo texto .R).</p>
+<p>Experimente:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Adição</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="dv">1</span><span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># Subtração</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="dv">5-4</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Multiplicação</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="dv">2</span><span class="op">*</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># Divisão</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="dv">100</span><span class="op">/</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co"># Exponenciação</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="dv">5</span><span class="op">^</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co"># Potência</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="kw">exp</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co"># Raiz quadrada</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="kw">sqrt</span>(<span class="dv">81</span>)</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co"># Fatorial</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="kw">factorial</span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co"># logaritmo base e</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="kw">log</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co"># logaritmo base 10</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="kw">log</span>(<span class="dv">10</span>, <span class="dt">base =</span> <span class="dv">10</span>)</a></code></pre></div>
+<hr />
+</div>
+<div id="objetos" class="section level1">
+<h1><span class="header-section-number">7</span> Objetos</h1>
+<p>Podemos armazenar resultados de interesses em variáveis, também chamadas de objetos, para que não seja necessário repetir a operação toda vez que necessitarmos de um resultado específico.</p>
+<p>Para atribuir valores à variáveis, utiliza-se o símbolo “&lt;-”, lê-se “recebe”. Por exemplo, caso haja uma variável nomeada como x, poderíamos escrever algo como: x &lt;- 10; a partir deste momento, na memória do computador, x vale 10 e todas as operações são válidas. Veja:</p>
+<ul>
+<li>Armazenando o valor 10 num objeto x:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<ul>
+<li>Quanto vale x?</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x</a></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<ul>
+<li>Quanto vale x+1?</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">x<span class="op">+</span><span class="dv">1</span></a></code></pre></div>
+<pre><code>## [1] 11</code></pre>
+<p>Outro exemplo:</p>
+<ul>
+<li>Uma expressão qualquer:</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">((<span class="kw">log</span>(<span class="dv">10</span>)<span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">34</span>)<span class="op">*</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">5</span></a></code></pre></div>
+<pre><code>## [1] 0.9327987</code></pre>
+<ul>
+<li>Armazenando o resultado da expressão em um objeto y:</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">y &lt;-<span class="st"> </span>((<span class="kw">log</span>(<span class="dv">10</span>)<span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">34</span>)<span class="op">*</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">5</span></a></code></pre></div>
+<ul>
+<li>Quanto vale y?</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">y</a></code></pre></div>
+<pre><code>## [1] 0.9327987</code></pre>
+<hr />
+<p>Os objetos que armazenam valores ficam na memória RAM, logo, são temporários. Para listar as variáveis criadas utiliza-se o comando <code>ls()</code> e para remover uma variável da memória o comando <code>rm(nome_da_variavel)</code>.</p>
+<p>Para remover todas as variáveis, usa-se o comando <code>rm(list = ls())</code>, este comando deve ser usado com muito cuidado, pois apaga todas as variáveis criadas sem perguntar. Veja:</p>
+<ul>
+<li>Listando as variáveis criadas:</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ls</span>()</a></code></pre></div>
+<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<ul>
+<li>Removendo a variável x:</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">rm</span>(x)</a></code></pre></div>
+<ul>
+<li>Verificando se a variável x foi mesmo removida:</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">ls</span>()</a></code></pre></div>
+<pre><code>## [1] &quot;y&quot;</code></pre>
+<ul>
+<li>Removendo todas as variáveis na memória temporária:</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</a></code></pre></div>
+<ul>
+<li>Não há mais variáveis criadas:</li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">ls</span>()</a></code></pre></div>
+<pre><code>## character(0)</code></pre>
+<hr />
+</div>
+<div id="rdata-e-rhistory" class="section level1">
+<h1><span class="header-section-number">8</span> Rdata e Rhistory</h1>
+<p>Digamos que terminamos nosso script, todas as tarefas foram realizadas. Nos resta agora salvar as alterações finais.</p>
+<p>Ao fazer isso <strong>NÃO</strong> salvamos o conteúdo das variáveis, apenas como fizemos para obtê-las, ou seja, ao reabrir o R e utilizar o comando <code>ls()</code>, não haverá nada.</p>
+<p>Quando são poucos dados e o processo para obtenção das variáveis não é custoso, não há mal nisso. Contudo quando o processo para obtenção leva tempo, uma alternativa é utilizar a opção disponível em <code>Session &gt; Save Workspace As...</code>, ao fazer isso salvamos um arquivo de extensão .Rdata que contém todos os objetos criados durante uma sessão.</p>
+<p>Desta forma se precisamos continuar de onde paramos, basta abrir o script e o Rdata, e todas as variáveis serão carregadas no R. Quando o R é iniciado em um diretório com um arquivo .Rdata, as variáveis salvas são automaticamente carregadas.</p>
+<p>Ao realizar este processo geramos também um arquivo de extensão .Rhistory. Se trata de um arquivo texto que contém todos os comandos que foram digitados no console, ou seja, um histórico do que foi executado.</p>
+<hr />
+</div>
+<div id="funcoes" class="section level1">
+<h1><span class="header-section-number">9</span> Funções</h1>
+<p>Funções são códigos encapsulados para realização de uma tarefa. Utilizando uma função faz com que não seja necessário escrever e copiar o código todas as vezes que precisar executar aquela operação.</p>
+<p>Imagine um caso simples:</p>
+<ol style="list-style-type: decimal">
+<li>Você tem 20 vetores e deseja calcular a média de cada um destes vetores.</li>
+<li>Sem uma função seria necessário somar os valores de cada elemento do vetor, dividir pelo número de elementos e replicar isto 20 vezes.</li>
+<li>Se tivessemos uma função em que fornecemos o vetor e o output é a média do vetor, facilitaria muito nossa vida.</li>
+</ol>
+<p>Este exemplo parece simples, mas pense em casos em que temos tarefas mais complexas que uma média em que há necessidade de replicar mais de 20 vezes; se torna inviável não utilizar uma função.</p>
+<hr />
+<p>Funções R têm a seguinte forma: <code>funcao(argumento1, argumento2, ...)</code>. Argumentos são os parâmetros para que a função funcione corretamente.</p>
+<p>A lista de parâmetros, funciona como a interface de comunicação, isto é, de passagem de dados do usuário para a função. Portanto, o usuário fornece o material e a função trabalha para retornar o resultado final.</p>
+<p>No R existem dois tipos de argumento: aqueles em que o usuário é obrigado a informar o valor do parâmetro (senão a função não funciona) e aqueles em que tal prática é opcional (pois há um valor “default” fixado na função). Na dúvida <strong>sempre verifique a documentação da função para evitar problemas.</strong></p>
+<p>Na documentação você encontra a finalidade da função, a função em si, todos os argumentos, a descrição de cada argumento, referências, funções relacionadas e também um exemplo prático genérico.</p>
+<p>Para buscar a documentação use: <code>?funcao</code> ou <code>help(funcao)</code>. Para funções que contenham o termo “palavra”, basta usar <code>help.search(&quot;palavra&quot;)</code>. Experimente também os comandos <code>help.start()</code> e <code>RSiteSearch(&quot;palavra&quot;)</code>.</p>
+<hr />
+<p>Algumas funções R importantes são:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Função</th>
+<th align="center">Tarefa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">c()</td>
+<td align="center">Cria um Vetor</td>
+</tr>
+<tr class="even">
+<td align="center">setwd()</td>
+<td align="center">Muda o Diretório de Trabalho Atual</td>
+</tr>
+<tr class="odd">
+<td align="center">getwd()</td>
+<td align="center">Mostra o Diretório de Trabalho</td>
+</tr>
+<tr class="even">
+<td align="center">dir()</td>
+<td align="center">Lista os Arquivos do Diretório de Trabalho Atual</td>
+</tr>
+<tr class="odd">
+<td align="center">sessionInfo()</td>
+<td align="center">Mostra algumas informações da sessão</td>
+</tr>
+<tr class="even">
+<td align="center">install.packages()</td>
+<td align="center">Instala um pacote</td>
+</tr>
+<tr class="odd">
+<td align="center">library()</td>
+<td align="center">Carrega um pacote</td>
+</tr>
+<tr class="even">
+<td align="center">require()</td>
+<td align="center">Carrega um pacote</td>
+</tr>
+<tr class="odd">
+<td align="center">example()</td>
+<td align="center">Mostra exemplos de alguma função</td>
+</tr>
+<tr class="even">
+<td align="center">print()</td>
+<td align="center">Imprime o resultado de uma variável</td>
+</tr>
+<tr class="odd">
+<td align="center">q()</td>
+<td align="center">Fecha a Sessão</td>
+</tr>
+<tr class="even">
+<td align="center">objects()</td>
+<td align="center">Exibe objetos criados</td>
+</tr>
+<tr class="odd">
+<td align="center">str()</td>
+<td align="center">Mostra a estrutura de um objeto</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Funções podem ser criadas pelo usuário através da função <code>function()</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">nome_da_funcao &lt;-<span class="st"> </span><span class="cf">function</span>(argumento1, argumento2){</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">  corpo_da_funcao <span class="co"># O que fazer com os argumentos informados pelo usuário</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">}</a></code></pre></div>
+<p>Veja um exemplo de função para obter a média entre 2 números:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">media2n &lt;-<span class="st"> </span><span class="cf">function</span>(numero1, numero2){</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">  media &lt;-<span class="st"> </span>(numero1<span class="op">+</span>numero2)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">  <span class="kw">return</span>(media)</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">}</a></code></pre></div>
+<p>Utilizando-a:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">media2n</span>(<span class="dt">numero1 =</span> <span class="dv">5</span>, <span class="dt">numero2 =</span> <span class="dv">0</span>)</a></code></pre></div>
+<pre><code>## [1] 2.5</code></pre>
+<p>Não há necessidade de utilizar a sintaxe <code>argumento = valor do argumento</code> desde que os valores correspondentes sejam colocados em ordem correta, isso é válido para qualquer função R. Porém é altamente recomendável, principalmente a usuários iniciantes, sempre escrever o argumento e o valor.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">media2n</span>(<span class="dv">5</span>, <span class="dv">0</span>)</a></code></pre></div>
+<pre><code>## [1] 2.5</code></pre>
+<hr />
+</div>
+<div id="pacotes" class="section level1">
+<h1><span class="header-section-number">10</span> Pacotes</h1>
+<p>Além das funções temos também os pacotes. Pacotes R são bibliotecas contendo funções e dados importantes para alguma finalidade específica. Por exemplo, o pacote <code>ggplot2</code> contém funções específicas para geração de gráficos, o pacote <code>gamlss</code> possui funções para ajuste de modelos de regressão da classe GAMLSS, dentre diversos outros.</p>
+<p>Existem 4 tipos de pacote:</p>
+<ul>
+<li><p>O R-base, que contém as funções principais disponíveis. Não precisa ser instalado nem carregado.</p></li>
+<li><p>Os pacotes recomendados, que são instalados junto com o R mas que não são carregados. Como o <code>MASS</code>, <code>lattice</code>, dentre outros.</p></li>
+<li><p>Pacotes contribuídos, também chamados de pacotes oficiais, que não vem com o R, então devem ser instalados e carregados. A lista destes pacotes está no <a href="http://cran.r-project.org/">CRAN (Comprehensive R Archive Network)</a>.</p></li>
+<li><p>Pacotes não oficiais, que podem ser instalados por outros meios como arquivos comprimidos ou repositórios no github, por exemplo. Normalmente proprietários de pacotes não oficiais fornecem instruções de como proceder para instalar o pacote.</p></li>
+</ul>
+<hr />
+<p>A instalação de pacotes oficiais pode ser feita através da função <code>install.packages()</code>. E o carregamento do pacote pode ser feito através da função <code>library()</code> ou <code>require()</code>. Quando o pacote não foi instalado o <code>require()</code> retorna FALSE. Além disso, há ainda a possibilidade de acessar uma função de um pacote instalado sem carregar todo o pacote na memória utilizando o operador <code>::</code>. Vejamos:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>) <span class="co"># instalando o pacote ggplot2</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="kw">library</span>(ggplot2) <span class="co"># carregando o pacote</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="kw">require</span>(ggplot2) <span class="co"># carregando o pacote  </span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb29-7" data-line-number="7">ggplot2<span class="op">::</span><span class="kw">ggplot</span>(<span class="dt">data =</span> dados, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) </a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co"># utilizando uma função sem carregar o pacote</span></a></code></pre></div>
+<hr />
+</div>
+<div id="classes" class="section level1">
+<h1><span class="header-section-number">11</span> Classes</h1>
+<p>Como já mencionado, um objeto é uma variável capaz de armazenar qualquer valor ou estrutura de dados. A forma de um objeto define sua classe, e com objetos é possível formar estruturas.</p>
+<p>No R temos as classes:</p>
+<ol style="list-style-type: decimal">
+<li><strong>numeric</strong>: números reais.</li>
+<li><strong>integer</strong>: números inteiros.</li>
+<li><strong>character</strong>: sequência de caracteres.</li>
+<li><strong>complex</strong>: números complexos (imaginários).</li>
+<li><strong>logical</strong>: verdadeiro (TRUE) ou falso (FALSE).</li>
+</ol>
+<p>Para verificar a classe de um objeto, temos a função <code>class</code>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># número real.</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2">a &lt;-<span class="st"> </span><span class="fl">4.6</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw">class</span>(a)</a></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># número inteiro.</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2">b &lt;-<span class="st"> </span>5L</a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="kw">class</span>(b)</a></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># sequência de caracteres.</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">c &lt;-<span class="st"> &quot;caracter&quot;</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="kw">class</span>(c)</a></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># número complexo.</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">d &lt;-<span class="st"> </span>4i</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="kw">class</span>(d)</a></code></pre></div>
+<pre><code>## [1] &quot;complex&quot;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># verdadeiro (TRUE) ou falso (FALSE).</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">e &lt;-<span class="st"> </span><span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="kw">class</span>(e)</a></code></pre></div>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
+<p>Os atributos importantes de um objeto podem ser verificados através das funções:</p>
+<ul>
+<li><code>str()</code></li>
+<li><code>names()</code></li>
+<li><code>dimnames()</code></li>
+<li><code>length()</code></li>
+<li><code>dim()</code></li>
+<li><code>class()</code></li>
+</ul>
+<hr />
+<p>Recomendo fortemente a leitura dos seguintes materiais, os quais usei como base para produção desse texto:</p>
+<ul>
+<li><p><a href="http://leg.ufpr.br/~fernandomayer/aulas/ce083/index.html">CE083 - Estatística Computacional I, UFPR</a></p></li>
+<li><p><a href="https://www.r-project.org/">The R Project for Statistical Computing</a></p></li>
+<li><p><a href="https://rstudio.com/about/">About RStudio</a></p></li>
+<li><p><a href="https://www.ufrgs.br/wiki-r/index.php?title=Hist%C3%B3ria_do_R">História do R</a></p></li>
+<li><p><a href="http://datascienceacademy.com.br/blog/linguagem-r-por-que-e-hora-de-aprender/">Linguagem R – Por que é hora de aprender?</a></p></li>
+<li><p><a href="https://rpubs.com/cassiorampinelli/488999">R e RStudio - Uma Visão Geral para os primeiros passos</a></p></li>
+<li><p><a href="https://r4ds.had.co.nz/">R for Data Science</a></p></li>
+<li><p><a href="http://www.cienciaedados.com/uma-breve-introducao-ao-r/">Uma Breve Introdução ao R</a></p></li>
+</ul>
+<hr />
+<p>Críticas e sugestões a este material sempre serão bem vindas.</p>
+<p>Para entrar em contato comigo, envie uma mensagem para <a href="mailto:lineuacf@gmail.com" class="email">lineuacf@gmail.com</a>.</p>
+<hr />
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

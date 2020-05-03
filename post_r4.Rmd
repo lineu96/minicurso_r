@@ -1,0 +1,542 @@
+---
+output:
+  html_document:                    # Classe de documento.
+    toc: true                       # Exibir sum?rio.
+    toc_depth: 2                    # Profundidade do sum?rio.
+    toc_float:                      # Sum?rio flutuante na borda.
+      collapsed: true
+      smooth_scroll: true
+    number_sections: true           # Se??es numeradas.
+    theme: cerulean
+    #spacelab
+    #default,cerulean,journal,flatly,readable,spacelab,
+    #united,cosmo,lumen,paper,sandstone,simplex,yeti
+    
+    highlight: espresso
+    #default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, and textmate
+    #css: styles.css                 # Caminho para arquivo CSS.
+    fig_width: 7                    # Lagura das figuras.
+    fig_height: 6                   # Altura das figuras.
+    fig_caption: true               # Exibica??o de legenda.
+    fig_align: 'center'
+#    code_folding: hide              # Esconder/exibir bloco de c?digo.
+#    keep_md: true                   # Manter o arquivo md.
+    #template: quarterly_report.html # Caminho para o template.  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+---
+
+<font size="8"> 
+<p align=”center”> <b> Primeiros Passos com o R </b> </center>
+</font>
+
+<font size="5"> 
+<p align=”center”> <b> Parte 4 - Análise Exploratória </b> </center>
+</font>
+
+<font size="4"> 
+<p align=”center”> [Lineu Alberto Cavazani de Freitas](https://lineu96.github.io/st/) </center>
+</font> 
+
+---
+
+# Análise exploratória
+
+Esta parte do material terá enfoque mais prático. Consideraremos um conjunto de dados genérico que contém diversos tipos de variável e vamos conduzir uma análise exploratória dos dados de forma a varrer o máximo de ferramentas para análise descritiva e como proceder para utilizá-las no R.
+
+Como exemplo de conjunto de dados brutos considere aquele descrito no livro [Noções de Probabilidade e Estatística](https://www.ime.usp.br/~noproest/doku.php) em que um questionário (disponível [aqui](https://www.ime.usp.br/~noproest/dados/questionario.txt)) foi aplicado aos alunos do primeiro ano de uma escola e possui as seguintes informações:
+
+ - **Id**: identificação do aluno.
+ - **Turma**: turma a que o aluno foi alocado (A ou B).
+ - **Sexo**: F se feminino, M se masculino.
+ - **Idade**: idade em anos.
+ - **Alt**: altura em metros.
+ - **Peso**: peso em quilogramas.
+ - **Filhos**: número de filhos na família.
+ - **Fuma**: hábito de fumar, sim ou não.
+ - **Toler**: tolerância ao cigarro: (I) indiferente; (P) incomoda pouco; (M) incomoda muito.
+ - **Exerc**: horas de atividade física, por semana.
+ - **Cine**: número de vezes que vai ao cinema por semana.
+ - **OpCine**: opinião a respeito das salas de cinema na cidade: (B) regular a boa; (M) muito boa.
+ - **TV**: horas gastas assistindo TV, por semana.
+ - **OpTV**: opinião a respeito da qualidade da programação na TV: (R) ruim; (M) média; (B) boa; (N) não sabe.
+
+---
+
+Parte dos dados brutos, representados em forma de tabela têm a seguinte forma:
+
+<div align="center">
+
+**Informações de questionário estudantil - dados brutos.**
+
+```{r, echo=FALSE}
+dados <- read.table("https://www.ime.usp.br/~noproest/dados/questionario.txt", header = T)
+
+DT::datatable(dados[, c(5, 1:4)], rownames = FALSE, width = 600)
+
+```
+</div>
+
+---
+
+Existem dois tipos de variáveis: as numéricas (**quantitativas**) e as não numéricas (**qualitativas**), cada uma das classes tem suas ramificações:
+
+**Variáveis Quantitativas**: assumem valores numéricos. 
+
+Podem ser:
+
+ - **Discretas**: características mensuráveis que podem assumir apenas um número finito ou infinito contável de valores e, assim, somente fazem sentido valores inteiros.
+ 
+ - **Contínuas**: características mensuráveis que assumem valores em uma escala contínua, isto é, na reta real.
+
+**Variáveis Qualitativas**: são as características definidas por categorias, ou seja, representam uma classificação dos indivíduos e não uma característica numérica. 
+
+Podem ser:
+
+ - **Nominais**: não existe ordenação nem peso entre as categorias.
+
+ - **Ordinais**: existe uma ordenação entre as categorias.
+
+---
+
+Classificando as variáveis do conjunto de dados do exemplo:
+
+ - **Id**: variável qualitativa nominal.
+ - **Turma**: variável qualitativa nominal.
+ - **Sexo**: variável qualitativa nominal.
+ - **Alt**: variável quantitativa contínua.
+ - **Peso**: variável quantitativa contínua.
+ - **Filhos**: variável quantitativa discreta.
+ - **Fuma**: variável qualitativa nominal.
+ - **Toler**: variável qualitativa ordinal.
+ - **Cine**: variável quantitativa discreta.
+ - **OpCine**: variável qualitativa ordinal. 
+ - **OpTV**: variável qualitativa ordinal.
+
+As variáveis **Idade**, **Exerc** e **TV** em essência são variáveis quantitativas contínuas, contudo note como nos dados elas foram tratadas como discretas, tendo em vista que há apenas valores inteiros. 
+
+---
+
+Didaticamente falando é um conjunto de dados bastante rico pois possui número razoável de observações e variáveis de todos os tipos. Desta forma podemos passar por tópicos que vão desde a leitura dos dados, passando por validações na base e uso de medidas descritivas até chegar nas análises gráficas.
+
+---
+
+# Leitura e validação
+
+Como se trata de um conjunto de dados do tipo texto, isto é, com extensão txt, podemos importar os dados para o R através da função `read.table()` e armazená-los em um objeto:
+
+```{r}
+dados <- read.table("https://www.ime.usp.br/~noproest/dados/questionario.txt", header = T)
+```
+
+Com o conjunto de dados importado devemos tomar algumas medidas de precaução, ou seja, verificar se a base foi importada corretamente. Isso implica em verificar número de linhas, colunas, estrutura, se os formatos foram devidamente interpretados na leitura, se os decimais foram corretamente lidos, etc. Tudo isso com o objetivo de evitar problemas posteriores. Devemos nos certificar que os dados estão corretos antes de manipular a base a fim de obter medidas e análises gráficas.
+
+---
+
+A função `read.table()` gera um data frame. Podemos verificar através das funções `class()` e `is.data.frame()`:
+
+```{r}
+class(dados)
+is.data.frame(dados)
+```
+
+Um hábito que todo usuário deve adquirir é utilizar a função `str()` que, no caso de um data frame, retorna sua dimensão (número de observações e variáveis), além dos nomes das variáveis e seu tipo. Veja:
+
+```{r}
+str(dados)
+```
+
+Com a informação que temos do output da função `str()` temos condição de verificar se as informações que importamos batem com o que recebemos a priori, isto é, se as variáveis foram corretamente lidas.
+
+Podemos notar que não houve problemas na leitura. As variáveis categóricas foram lidas como do tipo `factor` enquanto que as variáveis numéricas foram lidas como `numeric` no caso de contínuas e `integer` no caso de inteiras. 
+
+Eventualmente podemos ter variáveis categóricas representadas por números inteiros, como por exemplo, em vez de termos turma representada por A e B, poderíamos ter turma 1 e 2. Neste caso seria necessário converter toda a coluna que seria lida como `integer` para `factor` da seguinte forma:
+
+```{r, eval=FALSE}
+dados$Turma <- as.factor(dados$Turma)
+```
+
+Entenda que é um procedimento necessário pois caso contrário podemos cometer erros como obter medidas descritivas numéricas para uma variável que em essência é categórica
+
+Na primeira linha do output recebemos a informação de que há 50 observações de 14 variáveis. Podemos verificar esta informação através das funções `nrow()`, `ncol()` e `dim()`:
+
+```{r}
+nrow(dados)
+ncol(dados)
+dim(dados)
+```
+
+Outro procedimento usual feito antes de iniciar os trabalhos de análise é solicitar para que sejam printadas as primeiras linhas dos dados através da função `head()`, ou as últimas através da função `tail()`:
+
+```{r}
+head(dados)
+tail(dados)
+```
+
+---
+
+# Frequências
+
+Existem 3 tipos de frequência usualmente utilizadas em análises exploratórias: absoluta, relativa e acumulada. Um jeito simples de obter a frequência absoluta é através da função `table()`, enquanto que para obtenção da frequência relativa a função `prop.table()` é uma boa candidata, já para a frequência acumulada é possível utilizar a função `cumsum()`.
+
+Vamos iniciar gerando um data frame com as 3 frequências mencionadas para a variável sexo:
+
+```{r}
+fa_sexo <- table(dados$Sexo)   # frequência absoluta
+fr_sexo <- prop.table(fa_sexo) # frequência relativa
+fac_sexo <- cumsum(fr_sexo)    # frequência acumulada
+```
+
+E o resultado final com as 3 frequências pode ser representado da seguinte forma:
+
+```{r}
+data.frame(niveis = names(fa_sexo),
+           freq = as.vector(fa_sexo),
+           freq_r = as.vector(fr_sexo),
+           freq_ac = as.vector(fac_sexo))
+```
+
+A variável sexo é uma variável qualitativa nominal, vamos repetir o processo para obtenção das frequências para uma variável quantitativa discreta: a idade.
+
+```{r}
+fa_idade <- table(dados$Idade)
+fr_idade <- prop.table(fa_idade)
+fac_idade <- cumsum(fr_idade)
+
+data.frame(niveis = names(fa_idade),
+           freq = as.vector(fa_idade),
+           freq_r = as.vector(fr_idade),
+           freq_ac = as.vector(fac_idade))
+```
+
+
+Na prática podemos estar interessados em resumir informações a respeito de uma variável quantitativa discreta que apresente muitos possíveis valores ou ainda uma variável quantitativa contínua, o que significa que é praticamente inviável gerar uma tabela com o valor e número de ocorrências.
+
+Nestas situações uma alternativa consiste na construção de faixas de valores para que seja possível obter um número de classes menor e desta forma seja possível a construção de uma tabela de frequências mais enxuta. Existem técnicas para se calcular o número ideal de faixas, contudo esta quantidade pode ser arbitrária. Em geral recomenda-se utilizar de 5 a 8 faixas de mesma amplitude tendo em vista que um número excessivo de faixas torna a leitura complicada e faixas desiguais podem levar a interpretações equivocadas.
+
+Considerando a variável peso, uma variável variável quantitativa contínua. Podemos verificar seu mínimo e máximo através da função `range()` e, arbitratriamente sugerir um número de classes.
+
+```{r}
+range(dados$Peso)
+```
+
+Parece conveniente utilizar 6 classes de tamanho 10. Para isso vamos criar um novo data frame com os valores da variável peso em uma coluna e com as faixas a que cada valor pertence numa outra coluna, faremos isso através de um `ifelse()` que testará se o valor pertence à faixa. Outra forma de obter as classes é utilizando a função `cut()`.
+
+```{r}
+peso <- data.frame(peso = dados$Peso)
+peso$faixa <- NA
+
+peso$faixa <- ifelse(peso$peso >= 40 & peso$peso < 50, "[40, 50)",peso$faixa)
+peso$faixa <- ifelse(peso$peso >= 50 & peso$peso < 60, "[50, 60)",peso$faixa)
+peso$faixa <- ifelse(peso$peso >= 60 & peso$peso < 70, "[60, 70)",peso$faixa)
+peso$faixa <- ifelse(peso$peso >= 70 & peso$peso < 80, "[70, 80)",peso$faixa)
+peso$faixa <- ifelse(peso$peso >= 80 & peso$peso < 90, "[80, 90)",peso$faixa)
+peso$faixa <- ifelse(peso$peso >= 90 & peso$peso < 100, "[90, 100)",peso$faixa)
+```
+
+Dessa forma temos o peso e a faixa a que ele pertence e podemos repetir o mesmo processo feito nos dois últimos exemplos utilizando essas informações.
+
+```{r}
+fa_peso <- table(peso$faixa)
+fr_peso <- prop.table(table(peso$faixa))
+fac_peso <- cumsum(fr_peso)
+
+  data.frame(niveis = names(fa_peso),
+           freq = as.vector(fa_peso),
+           freq_r = as.vector(fr_peso),
+           freq_ac = as.vector(fac_peso))
+```
+
+---
+
+Além disso existem as tabelas de dupla entrada, que buscam avaliar as frequências absolutas e relativas para cruzamentos de níveis de duas variáveis:
+
+```{r}
+dupla <- with(dados, table(Fuma, Toler))
+dupla
+
+prop.table(dupla)
+```
+
+
+---
+
+# Medidas resumo
+
+As medidas resumo buscam sumarizar a informação disponível sobre o comportamento de uma variável através de representações numéricas. Existem medidas de posição e de dispersão.
+
+No R, quando nos é apresentado um conjunto de dados é usual, logo após a etapa de importação e validação, utilizar a função `summary()` que nos mostra o mínimo, máximo, média e quartis para variáveis numéricas e frequência das classes para variáveis qualitativas. É uma importante função para começar a conjecturar algumas coisas a respeito dos dados.
+
+```{r}
+summary(dados)
+```
+
+## Medidas de posição
+
+As medidas de posição ou tendência central são medidas resumo obtidas a partir de uma série de valores com o objetivo de mostrar em que valor se concentram os dados observados. Dentre estas medidas destacam-se: a média (`mean()`), mediana (`median()`) e moda dos dados. Não existe função no R base para obtenção da moda, mas ela é facilmente obtida via análise das tabelas de frequência tendo em vista que se trata do valor ou valores mais frequentes. Além dessas existem os quartis, que delimitam o valor em que se concentram 25%, 50% (a própria mediana) e 75% dos dados, podem ser obtidos pela função `quantile()`.
+
+Considerando a variável peso:
+
+```{r}
+mean(dados$Peso) # Média
+median(dados$Peso) # Mediana
+sort(table(dados$Peso), decreasing = TRUE)[1] # Moda
+quantile(dados$Peso) # Quartis
+```
+
+---
+
+Eventualmente pode ser interessante obter a média de uma variável numérica para cada nível de uma variável categórica ou até mesmo quantitativa discreta, este tipo de procedimento nos permite verificar se há indício de alguma diferença nos valores de uma variável entre diferentes grupos. 
+
+Uma alternativa para obter medidas descritivas para grupos é utilizando a já discutida função `tapply()`. Por exemplo, se estivermos interessados na média da variável peso para cada idade:
+
+```{r}
+tapply(X = dados$Peso, INDEX = dados$Idade, FUN = mean)
+```
+
+Ou ainda verificar a idade média de indivíduos que tem ou não o hábito de fumar:
+
+```{r}
+tapply(X = dados$Idade, INDEX = dados$Fuma, FUN = mean)
+```
+
+## Medidas de dispersão
+
+As medidas de posição por si só não são de grande valia para tirarmos conclusões preliminares a respeito de um conjunto de dados. Há a necessidade de aliar as medidas de posição a quantidades que mensurem a variabilidade. Desta forma precisamos obter uma medida de posição, que nos dá uma ideia de centro dos dados; e uma medida de dispersão, que nos dá uma noção de quão dispersos são os dados. As medidas de dispersão mais utilizadas são: Amplitude, Variância e Desvio Padrão.
+
+Para obtenção da amplitude basta subtrair o maior valor do menor. Considerando a variável altura:
+
+```{r}
+diff(range(dados$Alt))
+max(dados$Alt) - min(dados$Alt)
+```
+
+A variância e o desvio padrão podem ser obtidos através das funções `var()` e `sd()`. Lembre-se que o desvio padrão é a raiz quadrada da variância:
+
+```{r}
+var(dados$Alt) # Variância
+sd(dados$Alt)^2 # Variância
+sd(dados$Alt) # Desvio padrão
+```
+
+
+---
+
+# Medidas de associação
+
+O objetivo das medidas de associação é mensurar quanto uma variável influencia outra. A mais famosa medida de associação para variáveis numéricas é o coeficiente de correlação. A correlação varia de -1 até 1 em que valores acima de 0 indicam correlação positiva (a medida que uma variável aumenta a outra também aumenta), valores abaixo de 0 indicam correlação negativa (a medida que uma variável aumenta a outra diminui) e valores próximos de 0 indicam ausência de correlação. No R é possível obter a correlação entre variáveis através da função `cor()`.
+
+É possível utilizá-la aos pares:
+
+```{r}
+cor(dados$Idade, dados$Alt)
+```
+
+Ou ainda a um data frame contendo apenas variáveis numéricas, neste caso o output será uma matriz de correlação:
+
+```{r}
+df <- data.frame(Idade = dados$Idade,
+                 Alt = dados$Alt,
+                 Peso = dados$Peso,
+                 Filhos = dados$Filhos)
+
+cor(df)
+```
+
+---
+
+# Gráficos
+
+A organização dos dados em tabelas de frequência proporciona um meio eficaz de estudo do comportamento das características de interesse, contudo a informação pode ser melhor representada por meio de gráficos. 
+
+Cuidados devem ser tomados no que diz respeito à escolha do tipo de gráfico para representar a variável com o intuito de evitar que o gráfico fique desproporcional ou privilegiando determinados valores a fim de induzir conclusões àqueles que utilizam o gráfico como forma de visualização.
+
+Além disso, a escolha do gráfico está diretamente ligada ao tipo das variáveis. Vamos verificar as seguintes possibilidades:
+
+ - **Análises univariadas**:
+    * *Variável qualitativa nominal ou ordinal*: setores, barras.
+    * *Variável quantitativa discreta*: barras, histograma, boxplot.
+    * *Variável quantitativa contínua*: histograma ou boxplot.
+
+\
+
+ - **Análises bivariadas**:
+    * *Variável quantivativa vs Quantitativa*: Diagrama de dispersão.
+    * *Variável qualitativa vs Quantitativa*: Boxplots.
+    * *Variável qualitativa vs Qualitativa*: Gráfico de mosaico.
+
+---
+
+Algo feito após a etapa de leitura e validação, juntamente com a execução das funções `str()` e `summary()`, é utilizar a função `plot()` ao nosso data frame. Ao fazer isso será gerada uma matriz de gráficos considerando as variáveis aos pares, o que permite avaliar preliminarmente como uma variável influencia outra:
+
+```{r, fig.height=6, fig.width=6, fig.align='center'}
+plot(dados[,1:5])
+```
+
+---
+
+## Gráfico de setores
+
+Consiste em repartir um círculo em setores de tamanhos proporcionais às frequências relativas ou às porcentagens de cada valor. Podemos gerar o gráfico de setores no R utilizando a função `pie()`:
+
+```{r, fig.height=5, fig.width=5, fig.align='center'}
+toler <- as.data.frame(table(dados$Toler))
+names(toler) <- c('Tolerância', 'Freq')
+
+pie(toler$Freq, 
+    labels = toler$Tolerância,
+    main = 'Gráfico de setor para a \n variável Toler',
+    col = c('#CEF6F5', '#2ECCFA', '#5858FA'))
+```
+
+---
+
+## Gráfico de barras
+
+Utiliza os possíveis valores das variáveis no eixo das abcissas (x) e as frequências ou porcentagens no eixo das ordenadas (y). Para cada valor da variável desenha-se uma barra correspondente à frequência. Podemos gerar um gráfico de barras com a função `barplot()`:
+
+```{r, fig.height=5, fig.width=5, fig.align='center'}
+idade <- as.data.frame(table(dados$Idade))
+names(idade) <- c('Idade', 'Freq')
+
+barplot(idade$Freq, 
+        names.arg = idade$Idade,
+        col = '#F6CEE3',
+        main = 'Gráfico de barras para \n a variável Idade',
+        xlab = 'Idade',
+        ylab = 'Frequência')
+```
+
+---
+
+## Histograma
+
+O histograma consiste de retângulos contíguos de base dada pelas faixas de valores da variável e área igual à frequência da rescpectiva faixa. A altura de cada retângulo é denominada densidade de frequência. No R podemos gerar histogramas com a função `hist()`. Considerando a variável peso:
+
+```{r, fig.height=5, fig.width=5, fig.align='center'}
+hist(dados$Peso,
+     col = '#E3CEF6',
+     main = 'Histograma para a \n variável Peso',
+     ylab = 'Frequência',
+     xlab = 'Peso')
+```
+
+---
+
+## Box-plot
+
+O Box-plot faz uso dos quartis para obtenção de um gráfico no qual é possível analisar a distribuição dos dados, isto é, aspectos quanto a posição, variabilidade, assimetria e também a presença de valores atípicos.
+
+A construção de um box-plot inicia-se com um retângulo em que a aresta inferior coincide com o primeiro quartil e a superior com o terceiro quartil. A mediana é representada por um traço entre as duas arestas.
+
+De $Q_1$ até $Q_3$ estão 50% das observações centrais, o que dá uma ideia a respeito de quão dispersos são os valores. A amplitude deste intervalo, $IQ=Q_3-Q_1$ é chamada amplitude interquartil. Para obtenção da amplitude do box-plot além do retângulo faz-se $[Q_1-1,5IQ ; Q_3+1,5IQ]$, desenha-se então uma linha  até estes valores. Valores além destes extremos são marcados como um ponto ou asterisco e são os candidatos a valores atípicos.
+
+```{r, fig.height=5, fig.width=8, fig.align='center'}
+
+par(mfrow = c(1,2)) # permite colocar gráficos em painel
+
+boxplot(dados$Alt~dados$Sexo,
+        col = c('#F8E0F7','#E0F8F7'),
+        main = 'Box-plot da Altura em função \n do Sexo',
+        xlab = 'Sexo',
+        ylab = 'Altura')
+
+
+boxplot(dados$Peso,
+        col = '#F2F2F2',
+        main = 'Box-plot para a variável Peso',
+        ylab = 'Peso')
+
+```
+
+---
+
+## Diagrama de dispersão
+
+Para confecção do diagrama de dispersão uma variável é colocada no eixo x, outra no eixo y e então os pares ordenados são representados por pontos no plano cartesiano. No R a função genérica `plot()` gera um diagrama de dispersão caso as duas variáveis envolvidas sejam numéricas.
+
+```{r, fig.height=5, fig.width=5, fig.align='center'}
+
+plot(Alt~Peso, data = dados,
+     main = "Diagrama de dispersão para as \n variáveis Peso e Altura",
+     xlab = "Peso",
+     ylab = "Altura",
+     pch = 19)
+
+```
+
+---
+
+## Gráfico de mosaico
+
+Os gráficos de mosaico são usados para mostrar a relação entre duas variáveis qualitativas. Consiste em uma grade em que cada retângulo representa o número de casos que corresponde a um cruzamento específico de níveis das variáveis em questão. Quanto mais níveis das variáveis, maior será o número de retângulos. Da mesma forma que a função genérica `plot()` gera um diagrama de dispersão quando as duas variáveis são numéricas, ela gera um gráfico de mosaico quando as duas variáveis são categóricas:
+
+```{r, fig.height=5, fig.width=5, fig.align='center'}
+
+plot(dados$OpCine~dados$OpTV, 
+     xlab = 'OpTV', ylab = 'OpCine', 
+     main = "Gráfico de mosaico para as \n variáveis OpTV e OpCine",
+     font = 1,
+     col = c("#F8E0EC", "#E0F8E0"))
+
+```
+
+---
+
+# Considerações finais
+
+Para este material tanto quando foi tratada a geração de tabelas de frequência quanto nas medidas resumo e análise gráfica foram usadas apenas funções do R base, isto é, nenhum pacote foi utilizado.
+
+Existem pacotes específicos para conduzir análises exploratórias. Para geração gráficos por exemplo existe o `ggplot2` (leia o post [Primeiros Passos com ggplot2](https://lineu96.github.io/st/img/post/post_ggplot2.html)). 
+
+Contudo, principalmente quando o assunto é geração de visualizações, as do R base são bastante completas e customizáveis, por exemplo, além do que foi apresentado, é possível alterar o tamanho da fonte dos eixos com a função `cex()`, acrescentar linhas com as funções `lines()` e `abline()`, acrescentar textos dentro do gráfico com a função `text()` ou nas margens com a `mtext()`, além de adicionar formas com as funções `arrows()`, `rect()` e `polygon()`. 
+
+São infinitas possibilidades e a customização depende da curiosidade e paciência do usuário. Para exemplos de gráficos mais customizados usando o R base execute o comando:
+
+```{r, eval=FALSE}
+demo(graphics)
+```
+
+Vale ressaltar que não foram vistas todas as possibilidades para análise exploratória, existem tipos de dados em que certas visualizações e medidas são mais convenientes, por exemplo, quando lidamos com dados espaciais, ou dados provenientes de estudos que geram séries temporais, dados longitudinais, etc.
+
+---
+
+Importante esclarecer também que o objetivo deste material foi apresentar as técnicas básicas para análise exploratória e como proceder para obter tais resultados no R. Contudo omitiu-se a interpretação dos resultados. **Mas lembre-se que de nada vale um amontoado de medidas descritivas ou uma bela visualização se não há uma consistente discussão a respeito do que as medidas significam no problema de interesse ou o que podemos retirar de informação relevante da análise.**
+
+---
+
+Outros tópicos recomendados são: explorar argumentos das funções para geração de gráficos (outras formas de usar o argumento `col` por exemplo), como gerar gráficos em painel utilizando o `par(mfrow = c())`, como exportar os gráficos como imagem ou pdf para uma pasta do computador, dentre outros. Pratique!
+
+---
+
+Recomendo fortemente a leitura dos seguintes materiais, os quais usei como base para produção desse texto:
+
+ - [CE083 - Estatística Computacional I, UFPR](http://leg.ufpr.br/~fernandomayer/aulas/ce083/index.html)
+
+ - [The R Project for Statistical Computing](https://www.r-project.org/)
+
+ - [About RStudio](https://rstudio.com/about/)
+
+ - [História do R](https://www.ufrgs.br/wiki-r/index.php?title=Hist%C3%B3ria_do_R)
+
+ - [Linguagem R – Por que é hora de aprender?](http://datascienceacademy.com.br/blog/linguagem-r-por-que-e-hora-de-aprender/)
+
+ - [R e RStudio - Uma Visão Geral para os primeiros passos](https://rpubs.com/cassiorampinelli/488999)
+
+ - [R for Data Science](https://r4ds.had.co.nz/)
+
+ - [Uma Breve Introdução ao R](http://www.cienciaedados.com/uma-breve-introducao-ao-r/)
+
+---
+
+Críticas e sugestões a este material sempre serão bem vindas.
+
+Para entrar em contato comigo, envie uma mensagem para <lineuacf@gmail.com>.
+
+---
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

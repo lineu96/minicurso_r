@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>post_r4.utf8.md</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.10/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #2a211c;
+    color: #bdae9d;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #bdae9d;  padding-left: 4px; }
+div.sourceCode
+  { color: #bdae9d; background-color: #2a211c; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ffff00; } /* Alert */
+code span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #44aa43; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #049b0a; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
+code span.do { color: #0066ff; font-style: italic; } /* Documentation */
+code span.dt { text-decoration: underline; } /* DataType */
+code span.dv { color: #44aa43; } /* DecVal */
+code span.er { color: #ffff00; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #44aa43; } /* Float */
+code span.fu { color: #ff9358; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+code span.op { } /* Operator */
+code span.pp { font-weight: bold; } /* Preprocessor */
+code span.sc { color: #049b0a; } /* SpecialChar */
+code span.ss { color: #049b0a; } /* SpecialString */
+code span.st { color: #049b0a; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #049b0a; } /* VerbatimString */
+code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Minicurso R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-list-ol"></span>
+     
+    Material
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="post_r1.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Histórico e Primeiro contato
+      </a>
+    </li>
+    <li>
+      <a href="post_r2.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Estruturas, seleção e indexação
+      </a>
+    </li>
+    <li>
+      <a href="post_r3.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Importação e Programação
+      </a>
+    </li>
+    <li>
+      <a href="post_r4.html">
+        <span class="fa fa-arrow-right"></span>
+         
+        Análise Exploratória
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://lineu96.github.io/st/">
+    <span class="fa fa-user"></span>
+     
+    Lineu A.C.F
+  </a>
+</li>
+<li>
+  <a href="https://github.com/lineu96">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<hr />
+<font size="8">
+<p align=”center”>
+<b> Primeiros Passos com o R </b>
+</center>
+<p></font></p>
+<font size="5">
+<p align=”center”>
+<b> Parte 4 - Análise Exploratória </b>
+</center>
+<p></font></p>
+<font size="4">
+<p align=”center”>
+<a href="https://lineu96.github.io/st/">Lineu Alberto Cavazani de Freitas</a>
+</center>
+<p></font></p>
+<hr />
+<div id="analise-exploratoria" class="section level1">
+<h1><span class="header-section-number">1</span> Análise exploratória</h1>
+<p>Esta parte do material terá enfoque mais prático. Consideraremos um conjunto de dados genérico que contém diversos tipos de variável e vamos conduzir uma análise exploratória dos dados de forma a varrer o máximo de ferramentas para análise descritiva e como proceder para utilizá-las no R.</p>
+<p>Como exemplo de conjunto de dados brutos considere aquele descrito no livro <a href="https://www.ime.usp.br/~noproest/doku.php">Noções de Probabilidade e Estatística</a> em que um questionário (disponível <a href="https://www.ime.usp.br/~noproest/dados/questionario.txt">aqui</a>) foi aplicado aos alunos do primeiro ano de uma escola e possui as seguintes informações:</p>
+<ul>
+<li><strong>Id</strong>: identificação do aluno.</li>
+<li><strong>Turma</strong>: turma a que o aluno foi alocado (A ou B).</li>
+<li><strong>Sexo</strong>: F se feminino, M se masculino.</li>
+<li><strong>Idade</strong>: idade em anos.</li>
+<li><strong>Alt</strong>: altura em metros.</li>
+<li><strong>Peso</strong>: peso em quilogramas.</li>
+<li><strong>Filhos</strong>: número de filhos na família.</li>
+<li><strong>Fuma</strong>: hábito de fumar, sim ou não.</li>
+<li><strong>Toler</strong>: tolerância ao cigarro: (I) indiferente; (P) incomoda pouco; (M) incomoda muito.</li>
+<li><strong>Exerc</strong>: horas de atividade física, por semana.</li>
+<li><strong>Cine</strong>: número de vezes que vai ao cinema por semana.</li>
+<li><strong>OpCine</strong>: opinião a respeito das salas de cinema na cidade: (B) regular a boa; (M) muito boa.</li>
+<li><strong>TV</strong>: horas gastas assistindo TV, por semana.</li>
+<li><strong>OpTV</strong>: opinião a respeito da qualidade da programação na TV: (R) ruim; (M) média; (B) boa; (N) não sabe.</li>
+</ul>
+<hr />
+<p>Parte dos dados brutos, representados em forma de tabela têm a seguinte forma:</p>
+<div align="center">
+<p><strong>Informações de questionário estudantil - dados brutos.</strong></p>
+<div id="htmlwidget-b6000e0dd546c576a1e4" style="width:600px;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b6000e0dd546c576a1e4">{"x":{"filter":"none","data":[[1.6,1.69,1.85,1.85,1.58,1.76,1.6,1.64,1.62,1.64,1.72,1.66,1.7,1.78,1.65,1.63,1.82,1.8,1.6,1.68,1.7,1.65,1.57,1.55,1.69,1.54,1.62,1.62,1.57,1.65,1.61,1.71,1.65,1.67,1.73,1.6,1.7,1.85,1.7,1.73,1.7,1.45,1.76,1.68,1.55,1.7,1.55,1.6,1.8,1.83],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],["A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","A","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B"],["F","F","M","M","F","M","F","F","F","F","F","F","F","M","F","F","F","M","F","F","F","F","F","F","F","F","F","F","F","F","F","M","F","F","M","F","M","M","F","M","F","F","M","F","F","F","F","F","M","M"],[17,18,18,25,19,19,20,18,18,17,18,18,21,19,18,19,17,18,20,18,21,18,18,20,20,19,23,18,18,25,18,17,17,17,18,18,17,21,18,18,17,23,24,18,18,19,19,18,17,18]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Alt<\/th>\n      <th>Id<\/th>\n      <th>Turma<\/th>\n      <th>Sexo<\/th>\n      <th>Idade<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[0,1,4]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<hr />
+<p>Existem dois tipos de variáveis: as numéricas (<strong>quantitativas</strong>) e as não numéricas (<strong>qualitativas</strong>), cada uma das classes tem suas ramificações:</p>
+<p><strong>Variáveis Quantitativas</strong>: assumem valores numéricos.</p>
+<p>Podem ser:</p>
+<ul>
+<li><p><strong>Discretas</strong>: características mensuráveis que podem assumir apenas um número finito ou infinito contável de valores e, assim, somente fazem sentido valores inteiros.</p></li>
+<li><p><strong>Contínuas</strong>: características mensuráveis que assumem valores em uma escala contínua, isto é, na reta real.</p></li>
+</ul>
+<p><strong>Variáveis Qualitativas</strong>: são as características definidas por categorias, ou seja, representam uma classificação dos indivíduos e não uma característica numérica.</p>
+<p>Podem ser:</p>
+<ul>
+<li><p><strong>Nominais</strong>: não existe ordenação nem peso entre as categorias.</p></li>
+<li><p><strong>Ordinais</strong>: existe uma ordenação entre as categorias.</p></li>
+</ul>
+<hr />
+<p>Classificando as variáveis do conjunto de dados do exemplo:</p>
+<ul>
+<li><strong>Id</strong>: variável qualitativa nominal.</li>
+<li><strong>Turma</strong>: variável qualitativa nominal.</li>
+<li><strong>Sexo</strong>: variável qualitativa nominal.</li>
+<li><strong>Alt</strong>: variável quantitativa contínua.</li>
+<li><strong>Peso</strong>: variável quantitativa contínua.</li>
+<li><strong>Filhos</strong>: variável quantitativa discreta.</li>
+<li><strong>Fuma</strong>: variável qualitativa nominal.</li>
+<li><strong>Toler</strong>: variável qualitativa ordinal.</li>
+<li><strong>Cine</strong>: variável quantitativa discreta.</li>
+<li><strong>OpCine</strong>: variável qualitativa ordinal.</li>
+<li><strong>OpTV</strong>: variável qualitativa ordinal.</li>
+</ul>
+<p>As variáveis <strong>Idade</strong>, <strong>Exerc</strong> e <strong>TV</strong> em essência são variáveis quantitativas contínuas, contudo note como nos dados elas foram tratadas como discretas, tendo em vista que há apenas valores inteiros.</p>
+<hr />
+<p>Didaticamente falando é um conjunto de dados bastante rico pois possui número razoável de observações e variáveis de todos os tipos. Desta forma podemos passar por tópicos que vão desde a leitura dos dados, passando por validações na base e uso de medidas descritivas até chegar nas análises gráficas.</p>
+<hr />
+</div>
+<div id="leitura-e-validacao" class="section level1">
+<h1><span class="header-section-number">2</span> Leitura e validação</h1>
+<p>Como se trata de um conjunto de dados do tipo texto, isto é, com extensão txt, podemos importar os dados para o R através da função <code>read.table()</code> e armazená-los em um objeto:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">dados &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://www.ime.usp.br/~noproest/dados/questionario.txt&quot;</span>, <span class="dt">header =</span> T)</a></code></pre></div>
+<p>Com o conjunto de dados importado devemos tomar algumas medidas de precaução, ou seja, verificar se a base foi importada corretamente. Isso implica em verificar número de linhas, colunas, estrutura, se os formatos foram devidamente interpretados na leitura, se os decimais foram corretamente lidos, etc. Tudo isso com o objetivo de evitar problemas posteriores. Devemos nos certificar que os dados estão corretos antes de manipular a base a fim de obter medidas e análises gráficas.</p>
+<hr />
+<p>A função <code>read.table()</code> gera um data frame. Podemos verificar através das funções <code>class()</code> e <code>is.data.frame()</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span>(dados)</a></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">is.data.frame</span>(dados)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Um hábito que todo usuário deve adquirir é utilizar a função <code>str()</code> que, no caso de um data frame, retorna sua dimensão (número de observações e variáveis), além dos nomes das variáveis e seu tipo. Veja:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">str</span>(dados)</a></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    50 obs. of  14 variables:
+##  $ Id    : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Turma : Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Sexo  : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 1 2 2 1 2 1 1 1 1 ...
+##  $ Idade : int  17 18 18 25 19 19 20 18 18 17 ...
+##  $ Alt   : num  1.6 1.69 1.85 1.85 1.58 1.76 1.6 1.64 1.62 1.64 ...
+##  $ Peso  : num  60.5 55 72.8 80.9 55 60 58 47 57.8 58 ...
+##  $ Filhos: int  2 1 2 2 1 3 1 1 3 2 ...
+##  $ Fuma  : Factor w/ 2 levels &quot;NAO&quot;,&quot;SIM&quot;: 1 1 1 1 1 1 1 2 1 1 ...
+##  $ Toler : Factor w/ 3 levels &quot;I&quot;,&quot;M&quot;,&quot;P&quot;: 3 2 3 3 2 2 3 1 2 2 ...
+##  $ Exerc : int  0 0 5 5 2 2 3 2 3 2 ...
+##  $ Cine  : int  1 1 2 2 2 1 1 2 3 2 ...
+##  $ OpCine: Factor w/ 2 levels &quot;B&quot;,&quot;M&quot;: 1 1 2 1 1 1 1 2 2 2 ...
+##  $ TV    : int  16 7 15 20 5 2 7 10 12 10 ...
+##  $ OpTV  : Factor w/ 4 levels &quot;B&quot;,&quot;M&quot;,&quot;N&quot;,&quot;R&quot;: 4 4 4 4 4 4 4 4 4 4 ...</code></pre>
+<p>Com a informação que temos do output da função <code>str()</code> temos condição de verificar se as informações que importamos batem com o que recebemos a priori, isto é, se as variáveis foram corretamente lidas.</p>
+<p>Podemos notar que não houve problemas na leitura. As variáveis categóricas foram lidas como do tipo <code>factor</code> enquanto que as variáveis numéricas foram lidas como <code>numeric</code> no caso de contínuas e <code>integer</code> no caso de inteiras.</p>
+<p>Eventualmente podemos ter variáveis categóricas representadas por números inteiros, como por exemplo, em vez de termos turma representada por A e B, poderíamos ter turma 1 e 2. Neste caso seria necessário converter toda a coluna que seria lida como <code>integer</code> para <code>factor</code> da seguinte forma:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">dados<span class="op">$</span>Turma &lt;-<span class="st"> </span><span class="kw">as.factor</span>(dados<span class="op">$</span>Turma)</a></code></pre></div>
+<p>Entenda que é um procedimento necessário pois caso contrário podemos cometer erros como obter medidas descritivas numéricas para uma variável que em essência é categórica</p>
+<p>Na primeira linha do output recebemos a informação de que há 50 observações de 14 variáveis. Podemos verificar esta informação através das funções <code>nrow()</code>, <code>ncol()</code> e <code>dim()</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">nrow</span>(dados)</a></code></pre></div>
+<pre><code>## [1] 50</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">ncol</span>(dados)</a></code></pre></div>
+<pre><code>## [1] 14</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">dim</span>(dados)</a></code></pre></div>
+<pre><code>## [1] 50 14</code></pre>
+<p>Outro procedimento usual feito antes de iniciar os trabalhos de análise é solicitar para que sejam printadas as primeiras linhas dos dados através da função <code>head()</code>, ou as últimas através da função <code>tail()</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">head</span>(dados)</a></code></pre></div>
+<pre><code>##   Id Turma Sexo Idade  Alt Peso Filhos Fuma Toler Exerc Cine OpCine TV
+## 1  1     A    F    17 1.60 60.5      2  NAO     P     0    1      B 16
+## 2  2     A    F    18 1.69 55.0      1  NAO     M     0    1      B  7
+## 3  3     A    M    18 1.85 72.8      2  NAO     P     5    2      M 15
+## 4  4     A    M    25 1.85 80.9      2  NAO     P     5    2      B 20
+## 5  5     A    F    19 1.58 55.0      1  NAO     M     2    2      B  5
+## 6  6     A    M    19 1.76 60.0      3  NAO     M     2    1      B  2
+##   OpTV
+## 1    R
+## 2    R
+## 3    R
+## 4    R
+## 5    R
+## 6    R</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">tail</span>(dados)</a></code></pre></div>
+<pre><code>##    Id Turma Sexo Idade  Alt Peso Filhos Fuma Toler Exerc Cine OpCine TV
+## 45 45     B    F    18 1.55 49.0      1  NAO     M     0    1      M 10
+## 46 46     B    F    19 1.70 50.0      7  NAO     M     0    1      B  8
+## 47 47     B    F    19 1.55 54.5      2  NAO     M     4    3      B  3
+## 48 48     B    F    18 1.60 50.0      1  NAO     P     2    1      B  5
+## 49 49     B    M    17 1.80 71.0      1  NAO     P     7    0      M 14
+## 50 50     B    M    18 1.83 86.0      1  NAO     P     7    0      M 20
+##    OpTV
+## 45    R
+## 46    R
+## 47    R
+## 48    R
+## 49    R
+## 50    B</code></pre>
+<hr />
+</div>
+<div id="frequencias" class="section level1">
+<h1><span class="header-section-number">3</span> Frequências</h1>
+<p>Existem 3 tipos de frequência usualmente utilizadas em análises exploratórias: absoluta, relativa e acumulada. Um jeito simples de obter a frequência absoluta é através da função <code>table()</code>, enquanto que para obtenção da frequência relativa a função <code>prop.table()</code> é uma boa candidata, já para a frequência acumulada é possível utilizar a função <code>cumsum()</code>.</p>
+<p>Vamos iniciar gerando um data frame com as 3 frequências mencionadas para a variável sexo:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">fa_sexo &lt;-<span class="st"> </span><span class="kw">table</span>(dados<span class="op">$</span>Sexo)   <span class="co"># frequência absoluta</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">fr_sexo &lt;-<span class="st"> </span><span class="kw">prop.table</span>(fa_sexo) <span class="co"># frequência relativa</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">fac_sexo &lt;-<span class="st"> </span><span class="kw">cumsum</span>(fr_sexo)    <span class="co"># frequência acumulada</span></a></code></pre></div>
+<p>E o resultado final com as 3 frequências pode ser representado da seguinte forma:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">data.frame</span>(<span class="dt">niveis =</span> <span class="kw">names</span>(fa_sexo),</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">           <span class="dt">freq =</span> <span class="kw">as.vector</span>(fa_sexo),</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">           <span class="dt">freq_r =</span> <span class="kw">as.vector</span>(fr_sexo),</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">           <span class="dt">freq_ac =</span> <span class="kw">as.vector</span>(fac_sexo))</a></code></pre></div>
+<pre><code>##   niveis freq freq_r freq_ac
+## 1      F   37   0.74    0.74
+## 2      M   13   0.26    1.00</code></pre>
+<p>A variável sexo é uma variável qualitativa nominal, vamos repetir o processo para obtenção das frequências para uma variável quantitativa discreta: a idade.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">fa_idade &lt;-<span class="st"> </span><span class="kw">table</span>(dados<span class="op">$</span>Idade)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">fr_idade &lt;-<span class="st"> </span><span class="kw">prop.table</span>(fa_idade)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">fac_idade &lt;-<span class="st"> </span><span class="kw">cumsum</span>(fr_idade)</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="kw">data.frame</span>(<span class="dt">niveis =</span> <span class="kw">names</span>(fa_idade),</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">           <span class="dt">freq =</span> <span class="kw">as.vector</span>(fa_idade),</a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">           <span class="dt">freq_r =</span> <span class="kw">as.vector</span>(fr_idade),</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">           <span class="dt">freq_ac =</span> <span class="kw">as.vector</span>(fac_idade))</a></code></pre></div>
+<pre><code>##   niveis freq freq_r freq_ac
+## 1     17    9   0.18    0.18
+## 2     18   22   0.44    0.62
+## 3     19    7   0.14    0.76
+## 4     20    4   0.08    0.84
+## 5     21    3   0.06    0.90
+## 6     23    2   0.04    0.94
+## 7     24    1   0.02    0.96
+## 8     25    2   0.04    1.00</code></pre>
+<p>Na prática podemos estar interessados em resumir informações a respeito de uma variável quantitativa discreta que apresente muitos possíveis valores ou ainda uma variável quantitativa contínua, o que significa que é praticamente inviável gerar uma tabela com o valor e número de ocorrências.</p>
+<p>Nestas situações uma alternativa consiste na construção de faixas de valores para que seja possível obter um número de classes menor e desta forma seja possível a construção de uma tabela de frequências mais enxuta. Existem técnicas para se calcular o número ideal de faixas, contudo esta quantidade pode ser arbitrária. Em geral recomenda-se utilizar de 5 a 8 faixas de mesma amplitude tendo em vista que um número excessivo de faixas torna a leitura complicada e faixas desiguais podem levar a interpretações equivocadas.</p>
+<p>Considerando a variável peso, uma variável variável quantitativa contínua. Podemos verificar seu mínimo e máximo através da função <code>range()</code> e, arbitratriamente sugerir um número de classes.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">range</span>(dados<span class="op">$</span>Peso)</a></code></pre></div>
+<pre><code>## [1] 44 95</code></pre>
+<p>Parece conveniente utilizar 6 classes de tamanho 10. Para isso vamos criar um novo data frame com os valores da variável peso em uma coluna e com as faixas a que cada valor pertence numa outra coluna, faremos isso através de um <code>ifelse()</code> que testará se o valor pertence à faixa. Outra forma de obter as classes é utilizando a função <code>cut()</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">peso &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">peso =</span> dados<span class="op">$</span>Peso)</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">peso<span class="op">$</span>faixa &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4">peso<span class="op">$</span>faixa &lt;-<span class="st"> </span><span class="kw">ifelse</span>(peso<span class="op">$</span>peso <span class="op">&gt;=</span><span class="st"> </span><span class="dv">40</span> <span class="op">&amp;</span><span class="st"> </span>peso<span class="op">$</span>peso <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>, <span class="st">&quot;[40, 50)&quot;</span>,peso<span class="op">$</span>faixa)</a>
+<a class="sourceLine" id="cb26-5" data-line-number="5">peso<span class="op">$</span>faixa &lt;-<span class="st"> </span><span class="kw">ifelse</span>(peso<span class="op">$</span>peso <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span> <span class="op">&amp;</span><span class="st"> </span>peso<span class="op">$</span>peso <span class="op">&lt;</span><span class="st"> </span><span class="dv">60</span>, <span class="st">&quot;[50, 60)&quot;</span>,peso<span class="op">$</span>faixa)</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6">peso<span class="op">$</span>faixa &lt;-<span class="st"> </span><span class="kw">ifelse</span>(peso<span class="op">$</span>peso <span class="op">&gt;=</span><span class="st"> </span><span class="dv">60</span> <span class="op">&amp;</span><span class="st"> </span>peso<span class="op">$</span>peso <span class="op">&lt;</span><span class="st"> </span><span class="dv">70</span>, <span class="st">&quot;[60, 70)&quot;</span>,peso<span class="op">$</span>faixa)</a>
+<a class="sourceLine" id="cb26-7" data-line-number="7">peso<span class="op">$</span>faixa &lt;-<span class="st"> </span><span class="kw">ifelse</span>(peso<span class="op">$</span>peso <span class="op">&gt;=</span><span class="st"> </span><span class="dv">70</span> <span class="op">&amp;</span><span class="st"> </span>peso<span class="op">$</span>peso <span class="op">&lt;</span><span class="st"> </span><span class="dv">80</span>, <span class="st">&quot;[70, 80)&quot;</span>,peso<span class="op">$</span>faixa)</a>
+<a class="sourceLine" id="cb26-8" data-line-number="8">peso<span class="op">$</span>faixa &lt;-<span class="st"> </span><span class="kw">ifelse</span>(peso<span class="op">$</span>peso <span class="op">&gt;=</span><span class="st"> </span><span class="dv">80</span> <span class="op">&amp;</span><span class="st"> </span>peso<span class="op">$</span>peso <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>, <span class="st">&quot;[80, 90)&quot;</span>,peso<span class="op">$</span>faixa)</a>
+<a class="sourceLine" id="cb26-9" data-line-number="9">peso<span class="op">$</span>faixa &lt;-<span class="st"> </span><span class="kw">ifelse</span>(peso<span class="op">$</span>peso <span class="op">&gt;=</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span>peso<span class="op">$</span>peso <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>, <span class="st">&quot;[90, 100)&quot;</span>,peso<span class="op">$</span>faixa)</a></code></pre></div>
+<p>Dessa forma temos o peso e a faixa a que ele pertence e podemos repetir o mesmo processo feito nos dois últimos exemplos utilizando essas informações.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">fa_peso &lt;-<span class="st"> </span><span class="kw">table</span>(peso<span class="op">$</span>faixa)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">fr_peso &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(peso<span class="op">$</span>faixa))</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">fac_peso &lt;-<span class="st"> </span><span class="kw">cumsum</span>(fr_peso)</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">  <span class="kw">data.frame</span>(<span class="dt">niveis =</span> <span class="kw">names</span>(fa_peso),</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">           <span class="dt">freq =</span> <span class="kw">as.vector</span>(fa_peso),</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">           <span class="dt">freq_r =</span> <span class="kw">as.vector</span>(fr_peso),</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8">           <span class="dt">freq_ac =</span> <span class="kw">as.vector</span>(fac_peso))</a></code></pre></div>
+<pre><code>##      niveis freq freq_r freq_ac
+## 1  [40, 50)    8   0.16    0.16
+## 2  [50, 60)   22   0.44    0.60
+## 3  [60, 70)    8   0.16    0.76
+## 4  [70, 80)    6   0.12    0.88
+## 5  [80, 90)    5   0.10    0.98
+## 6 [90, 100)    1   0.02    1.00</code></pre>
+<hr />
+<p>Além disso existem as tabelas de dupla entrada, que buscam avaliar as frequências absolutas e relativas para cruzamentos de níveis de duas variáveis:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">dupla &lt;-<span class="st"> </span><span class="kw">with</span>(dados, <span class="kw">table</span>(Fuma, Toler))</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">dupla</a></code></pre></div>
+<pre><code>##      Toler
+## Fuma   I  M  P
+##   NAO  4 19 21
+##   SIM  6  0  0</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">prop.table</span>(dupla)</a></code></pre></div>
+<pre><code>##      Toler
+## Fuma     I    M    P
+##   NAO 0.08 0.38 0.42
+##   SIM 0.12 0.00 0.00</code></pre>
+<hr />
+</div>
+<div id="medidas-resumo" class="section level1">
+<h1><span class="header-section-number">4</span> Medidas resumo</h1>
+<p>As medidas resumo buscam sumarizar a informação disponível sobre o comportamento de uma variável através de representações numéricas. Existem medidas de posição e de dispersão.</p>
+<p>No R, quando nos é apresentado um conjunto de dados é usual, logo após a etapa de importação e validação, utilizar a função <code>summary()</code> que nos mostra o mínimo, máximo, média e quartis para variáveis numéricas e frequência das classes para variáveis qualitativas. É uma importante função para começar a conjecturar algumas coisas a respeito dos dados.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">summary</span>(dados)</a></code></pre></div>
+<pre><code>##        Id        Turma  Sexo       Idade           Alt       
+##  Min.   : 1.00   A:26   F:37   Min.   :17.0   Min.   :1.450  
+##  1st Qu.:13.25   B:24   M:13   1st Qu.:18.0   1st Qu.:1.603  
+##  Median :25.50                 Median :18.0   Median :1.665  
+##  Mean   :25.50                 Mean   :18.9   Mean   :1.672  
+##  3rd Qu.:37.75                 3rd Qu.:19.0   3rd Qu.:1.718  
+##  Max.   :50.00                 Max.   :25.0   Max.   :1.850  
+##       Peso           Filhos     Fuma    Toler      Exerc      
+##  Min.   :44.00   Min.   :1.0   NAO:44   I:10   Min.   : 0.00  
+##  1st Qu.:52.12   1st Qu.:1.0   SIM: 6   M:19   1st Qu.: 2.00  
+##  Median :58.00   Median :1.0            P:21   Median : 3.50  
+##  Mean   :60.93   Mean   :1.7                   Mean   : 3.80  
+##  3rd Qu.:67.88   3rd Qu.:2.0                   3rd Qu.: 5.75  
+##  Max.   :95.00   Max.   :7.0                   Max.   :10.00  
+##       Cine      OpCine       TV        OpTV  
+##  Min.   :0.00   B:32   Min.   : 0.00   B: 3  
+##  1st Qu.:1.00   M:18   1st Qu.: 5.00   M: 1  
+##  Median :2.00          Median :10.00   N: 7  
+##  Mean   :1.74          Mean   :10.78   R:39  
+##  3rd Qu.:2.00          3rd Qu.:14.00         
+##  Max.   :5.00          Max.   :30.00</code></pre>
+<div id="medidas-de-posicao" class="section level2">
+<h2><span class="header-section-number">4.1</span> Medidas de posição</h2>
+<p>As medidas de posição ou tendência central são medidas resumo obtidas a partir de uma série de valores com o objetivo de mostrar em que valor se concentram os dados observados. Dentre estas medidas destacam-se: a média (<code>mean()</code>), mediana (<code>median()</code>) e moda dos dados. Não existe função no R base para obtenção da moda, mas ela é facilmente obtida via análise das tabelas de frequência tendo em vista que se trata do valor ou valores mais frequentes. Além dessas existem os quartis, que delimitam o valor em que se concentram 25%, 50% (a própria mediana) e 75% dos dados, podem ser obtidos pela função <code>quantile()</code>.</p>
+<p>Considerando a variável peso:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">mean</span>(dados<span class="op">$</span>Peso) <span class="co"># Média</span></a></code></pre></div>
+<pre><code>## [1] 60.928</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">median</span>(dados<span class="op">$</span>Peso) <span class="co"># Mediana</span></a></code></pre></div>
+<pre><code>## [1] 58</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">sort</span>(<span class="kw">table</span>(dados<span class="op">$</span>Peso), <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)[<span class="dv">1</span>] <span class="co"># Moda</span></a></code></pre></div>
+<pre><code>## 55 
+##  4</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">quantile</span>(dados<span class="op">$</span>Peso) <span class="co"># Quartis</span></a></code></pre></div>
+<pre><code>##     0%    25%    50%    75%   100% 
+## 44.000 52.125 58.000 67.875 95.000</code></pre>
+<hr />
+<p>Eventualmente pode ser interessante obter a média de uma variável numérica para cada nível de uma variável categórica ou até mesmo quantitativa discreta, este tipo de procedimento nos permite verificar se há indício de alguma diferença nos valores de uma variável entre diferentes grupos.</p>
+<p>Uma alternativa para obter medidas descritivas para grupos é utilizando a já discutida função <code>tapply()</code>. Por exemplo, se estivermos interessados na média da variável peso para cada idade:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">tapply</span>(<span class="dt">X =</span> dados<span class="op">$</span>Peso, <span class="dt">INDEX =</span> dados<span class="op">$</span>Idade, <span class="dt">FUN =</span> mean)</a></code></pre></div>
+<pre><code>##       17       18       19       20       21       23       24       25 
+## 65.83333 60.25000 56.05714 53.02500 67.33333 53.50000 75.00000 69.95000</code></pre>
+<p>Ou ainda verificar a idade média de indivíduos que tem ou não o hábito de fumar:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">tapply</span>(<span class="dt">X =</span> dados<span class="op">$</span>Idade, <span class="dt">INDEX =</span> dados<span class="op">$</span>Fuma, <span class="dt">FUN =</span> mean)</a></code></pre></div>
+<pre><code>##      NAO      SIM 
+## 18.88636 19.00000</code></pre>
+</div>
+<div id="medidas-de-dispersao" class="section level2">
+<h2><span class="header-section-number">4.2</span> Medidas de dispersão</h2>
+<p>As medidas de posição por si só não são de grande valia para tirarmos conclusões preliminares a respeito de um conjunto de dados. Há a necessidade de aliar as medidas de posição a quantidades que mensurem a variabilidade. Desta forma precisamos obter uma medida de posição, que nos dá uma ideia de centro dos dados; e uma medida de dispersão, que nos dá uma noção de quão dispersos são os dados. As medidas de dispersão mais utilizadas são: Amplitude, Variância e Desvio Padrão.</p>
+<p>Para obtenção da amplitude basta subtrair o maior valor do menor. Considerando a variável altura:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">diff</span>(<span class="kw">range</span>(dados<span class="op">$</span>Alt))</a></code></pre></div>
+<pre><code>## [1] 0.4</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">max</span>(dados<span class="op">$</span>Alt) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(dados<span class="op">$</span>Alt)</a></code></pre></div>
+<pre><code>## [1] 0.4</code></pre>
+<p>A variância e o desvio padrão podem ser obtidos através das funções <code>var()</code> e <code>sd()</code>. Lembre-se que o desvio padrão é a raiz quadrada da variância:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">var</span>(dados<span class="op">$</span>Alt) <span class="co"># Variância</span></a></code></pre></div>
+<pre><code>## [1] 0.008208163</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">sd</span>(dados<span class="op">$</span>Alt)<span class="op">^</span><span class="dv">2</span> <span class="co"># Variância</span></a></code></pre></div>
+<pre><code>## [1] 0.008208163</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">sd</span>(dados<span class="op">$</span>Alt) <span class="co"># Desvio padrão</span></a></code></pre></div>
+<pre><code>## [1] 0.09059891</code></pre>
+<hr />
+</div>
+</div>
+<div id="medidas-de-associacao" class="section level1">
+<h1><span class="header-section-number">5</span> Medidas de associação</h1>
+<p>O objetivo das medidas de associação é mensurar quanto uma variável influencia outra. A mais famosa medida de associação para variáveis numéricas é o coeficiente de correlação. A correlação varia de -1 até 1 em que valores acima de 0 indicam correlação positiva (a medida que uma variável aumenta a outra também aumenta), valores abaixo de 0 indicam correlação negativa (a medida que uma variável aumenta a outra diminui) e valores próximos de 0 indicam ausência de correlação. No R é possível obter a correlação entre variáveis através da função <code>cor()</code>.</p>
+<p>É possível utilizá-la aos pares:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">cor</span>(dados<span class="op">$</span>Idade, dados<span class="op">$</span>Alt)</a></code></pre></div>
+<pre><code>## [1] 0.005540341</code></pre>
+<p>Ou ainda a um data frame contendo apenas variáveis numéricas, neste caso o output será uma matriz de correlação:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Idade =</span> dados<span class="op">$</span>Idade,</a>
+<a class="sourceLine" id="cb59-2" data-line-number="2">                 <span class="dt">Alt =</span> dados<span class="op">$</span>Alt,</a>
+<a class="sourceLine" id="cb59-3" data-line-number="3">                 <span class="dt">Peso =</span> dados<span class="op">$</span>Peso,</a>
+<a class="sourceLine" id="cb59-4" data-line-number="4">                 <span class="dt">Filhos =</span> dados<span class="op">$</span>Filhos)</a>
+<a class="sourceLine" id="cb59-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb59-6" data-line-number="6"><span class="kw">cor</span>(df)</a></code></pre></div>
+<pre><code>##              Idade          Alt        Peso      Filhos
+## Idade  1.000000000  0.005540341  0.04339009  0.26185111
+## Alt    0.005540341  1.000000000  0.73769677 -0.01030792
+## Peso   0.043390085  0.737696767  1.00000000 -0.20025615
+## Filhos 0.261851106 -0.010307920 -0.20025615  1.00000000</code></pre>
+<hr />
+</div>
+<div id="graficos" class="section level1">
+<h1><span class="header-section-number">6</span> Gráficos</h1>
+<p>A organização dos dados em tabelas de frequência proporciona um meio eficaz de estudo do comportamento das características de interesse, contudo a informação pode ser melhor representada por meio de gráficos.</p>
+<p>Cuidados devem ser tomados no que diz respeito à escolha do tipo de gráfico para representar a variável com o intuito de evitar que o gráfico fique desproporcional ou privilegiando determinados valores a fim de induzir conclusões àqueles que utilizam o gráfico como forma de visualização.</p>
+<p>Além disso, a escolha do gráfico está diretamente ligada ao tipo das variáveis. Vamos verificar as seguintes possibilidades:</p>
+<ul>
+<li><strong>Análises univariadas</strong>:
+<ul>
+<li><em>Variável qualitativa nominal ou ordinal</em>: setores, barras.</li>
+<li><em>Variável quantitativa discreta</em>: barras, histograma, boxplot.</li>
+<li><em>Variável quantitativa contínua</em>: histograma ou boxplot.</li>
+</ul></li>
+</ul>
+<p><br />
+</p>
+<ul>
+<li><strong>Análises bivariadas</strong>:
+<ul>
+<li><em>Variável quantivativa vs Quantitativa</em>: Diagrama de dispersão.</li>
+<li><em>Variável qualitativa vs Quantitativa</em>: Boxplots.</li>
+<li><em>Variável qualitativa vs Qualitativa</em>: Gráfico de mosaico.</li>
+</ul></li>
+</ul>
+<hr />
+<p>Algo feito após a etapa de leitura e validação, juntamente com a execução das funções <code>str()</code> e <code>summary()</code>, é utilizar a função <code>plot()</code> ao nosso data frame. Ao fazer isso será gerada uma matriz de gráficos considerando as variáveis aos pares, o que permite avaliar preliminarmente como uma variável influencia outra:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="kw">plot</span>(dados[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a></code></pre></div>
+<p><img src="post_r4_files/figure-html/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="grafico-de-setores" class="section level2">
+<h2><span class="header-section-number">6.1</span> Gráfico de setores</h2>
+<p>Consiste em repartir um círculo em setores de tamanhos proporcionais às frequências relativas ou às porcentagens de cada valor. Podemos gerar o gráfico de setores no R utilizando a função <code>pie()</code>:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">toler &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(dados<span class="op">$</span>Toler))</a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="kw">names</span>(toler) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Tolerância&#39;</span>, <span class="st">&#39;Freq&#39;</span>)</a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"><span class="kw">pie</span>(toler<span class="op">$</span>Freq, </a>
+<a class="sourceLine" id="cb62-5" data-line-number="5">    <span class="dt">labels =</span> toler<span class="op">$</span>Tolerância,</a>
+<a class="sourceLine" id="cb62-6" data-line-number="6">    <span class="dt">main =</span> <span class="st">&#39;Gráfico de setor para a </span><span class="ch">\n</span><span class="st"> variável Toler&#39;</span>,</a>
+<a class="sourceLine" id="cb62-7" data-line-number="7">    <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&#39;#CEF6F5&#39;</span>, <span class="st">&#39;#2ECCFA&#39;</span>, <span class="st">&#39;#5858FA&#39;</span>))</a></code></pre></div>
+<p><img src="post_r4_files/figure-html/unnamed-chunk-24-1.png" width="480" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="grafico-de-barras" class="section level2">
+<h2><span class="header-section-number">6.2</span> Gráfico de barras</h2>
+<p>Utiliza os possíveis valores das variáveis no eixo das abcissas (x) e as frequências ou porcentagens no eixo das ordenadas (y). Para cada valor da variável desenha-se uma barra correspondente à frequência. Podemos gerar um gráfico de barras com a função <code>barplot()</code>:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">idade &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(dados<span class="op">$</span>Idade))</a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="kw">names</span>(idade) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Idade&#39;</span>, <span class="st">&#39;Freq&#39;</span>)</a>
+<a class="sourceLine" id="cb63-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb63-4" data-line-number="4"><span class="kw">barplot</span>(idade<span class="op">$</span>Freq, </a>
+<a class="sourceLine" id="cb63-5" data-line-number="5">        <span class="dt">names.arg =</span> idade<span class="op">$</span>Idade,</a>
+<a class="sourceLine" id="cb63-6" data-line-number="6">        <span class="dt">col =</span> <span class="st">&#39;#F6CEE3&#39;</span>,</a>
+<a class="sourceLine" id="cb63-7" data-line-number="7">        <span class="dt">main =</span> <span class="st">&#39;Gráfico de barras para </span><span class="ch">\n</span><span class="st"> a variável Idade&#39;</span>,</a>
+<a class="sourceLine" id="cb63-8" data-line-number="8">        <span class="dt">xlab =</span> <span class="st">&#39;Idade&#39;</span>,</a>
+<a class="sourceLine" id="cb63-9" data-line-number="9">        <span class="dt">ylab =</span> <span class="st">&#39;Frequência&#39;)</span></a></code></pre></div>
+<p><img src="post_r4_files/figure-html/unnamed-chunk-25-1.png" width="480" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="histograma" class="section level2">
+<h2><span class="header-section-number">6.3</span> Histograma</h2>
+<p>O histograma consiste de retângulos contíguos de base dada pelas faixas de valores da variável e área igual à frequência da rescpectiva faixa. A altura de cada retângulo é denominada densidade de frequência. No R podemos gerar histogramas com a função <code>hist()</code>. Considerando a variável peso:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">hist</span>(dados<span class="op">$</span>Peso,</a>
+<a class="sourceLine" id="cb64-2" data-line-number="2">     <span class="dt">col =</span> <span class="st">&#39;#E3CEF6&#39;</span>,</a>
+<a class="sourceLine" id="cb64-3" data-line-number="3">     <span class="dt">main =</span> <span class="st">&#39;Histograma para a </span><span class="ch">\n</span><span class="st"> variável Peso&#39;</span>,</a>
+<a class="sourceLine" id="cb64-4" data-line-number="4">     <span class="dt">ylab =</span> <span class="st">&#39;Frequência&#39;,</span></a>
+<a class="sourceLine" id="cb64-5" data-line-number="5"><span class="st">     xlab = &#39;</span>Peso<span class="st">&#39;)</span></a></code></pre></div>
+<p><img src="post_r4_files/figure-html/unnamed-chunk-26-1.png" width="480" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="box-plot" class="section level2">
+<h2><span class="header-section-number">6.4</span> Box-plot</h2>
+<p>O Box-plot faz uso dos quartis para obtenção de um gráfico no qual é possível analisar a distribuição dos dados, isto é, aspectos quanto a posição, variabilidade, assimetria e também a presença de valores atípicos.</p>
+<p>A construção de um box-plot inicia-se com um retângulo em que a aresta inferior coincide com o primeiro quartil e a superior com o terceiro quartil. A mediana é representada por um traço entre as duas arestas.</p>
+<p>De <span class="math inline">\(Q_1\)</span> até <span class="math inline">\(Q_3\)</span> estão 50% das observações centrais, o que dá uma ideia a respeito de quão dispersos são os valores. A amplitude deste intervalo, <span class="math inline">\(IQ=Q_3-Q_1\)</span> é chamada amplitude interquartil. Para obtenção da amplitude do box-plot além do retângulo faz-se <span class="math inline">\([Q_1-1,5IQ ; Q_3+1,5IQ]\)</span>, desenha-se então uma linha até estes valores. Valores além destes extremos são marcados como um ponto ou asterisco e são os candidatos a valores atípicos.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="co"># permite colocar gráficos em painel</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb65-3" data-line-number="3"><span class="kw">boxplot</span>(dados<span class="op">$</span>Alt<span class="op">~</span>dados<span class="op">$</span>Sexo,</a>
+<a class="sourceLine" id="cb65-4" data-line-number="4">        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&#39;#F8E0F7&#39;</span>,<span class="st">&#39;#E0F8F7&#39;</span>),</a>
+<a class="sourceLine" id="cb65-5" data-line-number="5">        <span class="dt">main =</span> <span class="st">&#39;Box-plot da Altura em função </span><span class="ch">\n</span><span class="st"> do Sexo&#39;</span>,</a>
+<a class="sourceLine" id="cb65-6" data-line-number="6">        <span class="dt">xlab =</span> <span class="st">&#39;Sexo&#39;</span>,</a>
+<a class="sourceLine" id="cb65-7" data-line-number="7">        <span class="dt">ylab =</span> <span class="st">&#39;Altura&#39;</span>)</a>
+<a class="sourceLine" id="cb65-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb65-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb65-10" data-line-number="10"><span class="kw">boxplot</span>(dados<span class="op">$</span>Peso,</a>
+<a class="sourceLine" id="cb65-11" data-line-number="11">        <span class="dt">col =</span> <span class="st">&#39;#F2F2F2&#39;</span>,</a>
+<a class="sourceLine" id="cb65-12" data-line-number="12">        <span class="dt">main =</span> <span class="st">&#39;Box-plot para a variável Peso&#39;</span>,</a>
+<a class="sourceLine" id="cb65-13" data-line-number="13">        <span class="dt">ylab =</span> <span class="st">&#39;Peso&#39;</span>)</a></code></pre></div>
+<p><img src="post_r4_files/figure-html/unnamed-chunk-27-1.png" width="768" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="diagrama-de-dispersao" class="section level2">
+<h2><span class="header-section-number">6.5</span> Diagrama de dispersão</h2>
+<p>Para confecção do diagrama de dispersão uma variável é colocada no eixo x, outra no eixo y e então os pares ordenados são representados por pontos no plano cartesiano. No R a função genérica <code>plot()</code> gera um diagrama de dispersão caso as duas variáveis envolvidas sejam numéricas.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">plot</span>(Alt<span class="op">~</span>Peso, <span class="dt">data =</span> dados,</a>
+<a class="sourceLine" id="cb66-2" data-line-number="2">     <span class="dt">main =</span> <span class="st">&quot;Diagrama de dispersão para as </span><span class="ch">\n</span><span class="st"> variáveis Peso e Altura&quot;</span>,</a>
+<a class="sourceLine" id="cb66-3" data-line-number="3">     <span class="dt">xlab =</span> <span class="st">&quot;Peso&quot;</span>,</a>
+<a class="sourceLine" id="cb66-4" data-line-number="4">     <span class="dt">ylab =</span> <span class="st">&quot;Altura&quot;</span>,</a>
+<a class="sourceLine" id="cb66-5" data-line-number="5">     <span class="dt">pch =</span> <span class="dv">19</span>)</a></code></pre></div>
+<p><img src="post_r4_files/figure-html/unnamed-chunk-28-1.png" width="480" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="grafico-de-mosaico" class="section level2">
+<h2><span class="header-section-number">6.6</span> Gráfico de mosaico</h2>
+<p>Os gráficos de mosaico são usados para mostrar a relação entre duas variáveis qualitativas. Consiste em uma grade em que cada retângulo representa o número de casos que corresponde a um cruzamento específico de níveis das variáveis em questão. Quanto mais níveis das variáveis, maior será o número de retângulos. Da mesma forma que a função genérica <code>plot()</code> gera um diagrama de dispersão quando as duas variáveis são numéricas, ela gera um gráfico de mosaico quando as duas variáveis são categóricas:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">plot</span>(dados<span class="op">$</span>OpCine<span class="op">~</span>dados<span class="op">$</span>OpTV, </a>
+<a class="sourceLine" id="cb67-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&#39;OpTV&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;OpCine&#39;</span>, </a>
+<a class="sourceLine" id="cb67-3" data-line-number="3">     <span class="dt">main =</span> <span class="st">&quot;Gráfico de mosaico para as </span><span class="ch">\n</span><span class="st"> variáveis OpTV e OpCine&quot;</span>,</a>
+<a class="sourceLine" id="cb67-4" data-line-number="4">     <span class="dt">font =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb67-5" data-line-number="5">     <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;#F8E0EC&quot;</span>, <span class="st">&quot;#E0F8E0&quot;</span>))</a></code></pre></div>
+<p><img src="post_r4_files/figure-html/unnamed-chunk-29-1.png" width="480" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+<div id="consideracoes-finais" class="section level1">
+<h1><span class="header-section-number">7</span> Considerações finais</h1>
+<p>Para este material tanto quando foi tratada a geração de tabelas de frequência quanto nas medidas resumo e análise gráfica foram usadas apenas funções do R base, isto é, nenhum pacote foi utilizado.</p>
+<p>Existem pacotes específicos para conduzir análises exploratórias. Para geração gráficos por exemplo existe o <code>ggplot2</code> (leia o post <a href="https://lineu96.github.io/st/img/post/post_ggplot2.html">Primeiros Passos com ggplot2</a>).</p>
+<p>Contudo, principalmente quando o assunto é geração de visualizações, as do R base são bastante completas e customizáveis, por exemplo, além do que foi apresentado, é possível alterar o tamanho da fonte dos eixos com a função <code>cex()</code>, acrescentar linhas com as funções <code>lines()</code> e <code>abline()</code>, acrescentar textos dentro do gráfico com a função <code>text()</code> ou nas margens com a <code>mtext()</code>, além de adicionar formas com as funções <code>arrows()</code>, <code>rect()</code> e <code>polygon()</code>.</p>
+<p>São infinitas possibilidades e a customização depende da curiosidade e paciência do usuário. Para exemplos de gráficos mais customizados usando o R base execute o comando:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">demo</span>(graphics)</a></code></pre></div>
+<p>Vale ressaltar que não foram vistas todas as possibilidades para análise exploratória, existem tipos de dados em que certas visualizações e medidas são mais convenientes, por exemplo, quando lidamos com dados espaciais, ou dados provenientes de estudos que geram séries temporais, dados longitudinais, etc.</p>
+<hr />
+<p>Importante esclarecer também que o objetivo deste material foi apresentar as técnicas básicas para análise exploratória e como proceder para obter tais resultados no R. Contudo omitiu-se a interpretação dos resultados. <strong>Mas lembre-se que de nada vale um amontoado de medidas descritivas ou uma bela visualização se não há uma consistente discussão a respeito do que as medidas significam no problema de interesse ou o que podemos retirar de informação relevante da análise.</strong></p>
+<hr />
+<p>Outros tópicos recomendados são: explorar argumentos das funções para geração de gráficos (outras formas de usar o argumento <code>col</code> por exemplo), como gerar gráficos em painel utilizando o <code>par(mfrow = c())</code>, como exportar os gráficos como imagem ou pdf para uma pasta do computador, dentre outros. Pratique!</p>
+<hr />
+<p>Recomendo fortemente a leitura dos seguintes materiais, os quais usei como base para produção desse texto:</p>
+<ul>
+<li><p><a href="http://leg.ufpr.br/~fernandomayer/aulas/ce083/index.html">CE083 - Estatística Computacional I, UFPR</a></p></li>
+<li><p><a href="https://www.r-project.org/">The R Project for Statistical Computing</a></p></li>
+<li><p><a href="https://rstudio.com/about/">About RStudio</a></p></li>
+<li><p><a href="https://www.ufrgs.br/wiki-r/index.php?title=Hist%C3%B3ria_do_R">História do R</a></p></li>
+<li><p><a href="http://datascienceacademy.com.br/blog/linguagem-r-por-que-e-hora-de-aprender/">Linguagem R – Por que é hora de aprender?</a></p></li>
+<li><p><a href="https://rpubs.com/cassiorampinelli/488999">R e RStudio - Uma Visão Geral para os primeiros passos</a></p></li>
+<li><p><a href="https://r4ds.had.co.nz/">R for Data Science</a></p></li>
+<li><p><a href="http://www.cienciaedados.com/uma-breve-introducao-ao-r/">Uma Breve Introdução ao R</a></p></li>
+</ul>
+<hr />
+<p>Críticas e sugestões a este material sempre serão bem vindas.</p>
+<p>Para entrar em contato comigo, envie uma mensagem para <a href="mailto:lineuacf@gmail.com" class="email">lineuacf@gmail.com</a>.</p>
+<hr />
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
