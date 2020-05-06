@@ -57,5 +57,7 @@ output:
     # spacelab, united, cosmo, 
     # lumen, paper, sandstone, 
     # simplex, and yeti
-    
-    
+    includes:
+      
+      before_body: header.html
+      
